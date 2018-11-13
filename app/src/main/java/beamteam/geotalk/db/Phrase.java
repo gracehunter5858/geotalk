@@ -2,11 +2,12 @@ package beamteam.geotalk.db;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 @Entity(foreignKeys = {
-        @ForeignKey(entity = LocationCategory.class,
+        @ForeignKey(entity = Location.class,
                 parentColumns = "name",
                 childColumns = "location"),
         @ForeignKey(entity = Language.class,
@@ -17,12 +18,12 @@ public class Phrase {
 
     @PrimaryKey
     @NonNull
-    private int id;
-    private String phrase;
-    private String location;
-    private String language;
-    private String generalCategory;
-    private String locationSubcategory;
+    public int id;
+    public String phrase;
+    public String location;
+    public String language;
+    public String generalCategory;
+    public String locationSubcategory;
 
     // General phrase constructor
     public Phrase(int id, String phrase, String language, String generalCategory) {
@@ -32,6 +33,7 @@ public class Phrase {
         this.generalCategory = generalCategory;
     }
 
+    @Ignore
     // Location-based phrase constructor
     // locationSubcategory can be null for locations that don't need subcategories
     public Phrase(int id, String phrase, String language, String location, String locationSubcategory) {
@@ -40,31 +42,6 @@ public class Phrase {
         this.language = language;
         this.location = location;
         this.locationSubcategory = locationSubcategory;
-    }
-
-    @NonNull
-    public Integer getId() {
-        return id;
-    }
-
-    public String getPhrase() {
-        return this.phrase;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public String getGeneralCategory() {
-        return generalCategory;
-    }
-
-    public String getLocationSubcategory() {
-        return locationSubcategory;
     }
 
 }

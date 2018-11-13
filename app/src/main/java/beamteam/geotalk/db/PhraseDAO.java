@@ -14,19 +14,19 @@ public interface PhraseDAO {
     @Query("SELECT * from Phrase WHERE language=:language AND location=:location ORDER BY id")
     List<Phrase> getAllLocationPhrases(String language, String location);
 
-    @Query("SELECT * from Phrase WHERE language=:language AND locationSubcategory=:category ORDER BY id")
+    @Query("SELECT * from Phrase WHERE language=:language AND location=:location AND locationSubcategory=:category ORDER BY id")
     List<Phrase> getLocationPhrasesByCategory(String language, String location, String category);
 
     @Query("SELECT * from Phrase WHERE language=:language AND generalCategory=:category ORDER BY id")
     List<Phrase> getGeneralPhrasesByCategory(String language, String category);
 
     @Insert
-    void insert(LocationCategory locationCategory);
+    void insert(Phrase phrase);
 
     @Delete
-    void delete(LocationCategory locationCategory);
+    void delete(Phrase phrase);
 
     @Update
-    void update(LocationCategory locationCategory);
+    void update(Phrase phrase);
 
 }

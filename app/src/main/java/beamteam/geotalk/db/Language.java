@@ -10,15 +10,10 @@ public class Language {
 
     @PrimaryKey
     @NonNull
-    private String name;
+    public String name;
 
     public Language(String name) {
         this.name = name;
-    }
-
-    @NonNull
-    public String getName() {
-        return name;
     }
 
 }

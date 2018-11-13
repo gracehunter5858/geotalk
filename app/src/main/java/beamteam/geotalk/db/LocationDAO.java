@@ -1,3 +1,4 @@
+
 package beamteam.geotalk.db;
 
 import android.arch.persistence.room.Dao;
@@ -8,18 +9,19 @@ import android.arch.persistence.room.Update;
 
 
 @Dao
-public interface LocationCategoryDAO {
+public interface LocationDAO {
 
-    @Query("SELECT * FROM LocationCategory WHERE name=name")
+    @Query("SELECT * FROM Location WHERE name=:name")
     Language getLocationCategory(String name);
 
     @Insert
-    void insert(LocationCategory locationCategory);
+    void insert(Location location);
 
     @Delete
-    void delete(LocationCategory locationCategory);
+    void delete(Location location);
 
     @Update
-    void update(LocationCategory locationCategory);
+    void update(Location location);
 
 }
+
