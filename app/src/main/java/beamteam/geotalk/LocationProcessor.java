@@ -33,14 +33,14 @@ public class LocationProcessor {
 
     LocationProcessor() {
         // DEBUG:
-        locationTypeToCategory.put("storetype", "storecategory");
+        /**locationTypeToCategory.put("storetype", "storecategory");
         locationTypeToCategory.put("not available", "category not available");
         HashMap<String, String[]> phrases = new HashMap<>();
         HashMap<String, String[]> notAvail = new HashMap<>();
         phrases.put("all", new String[]{"phrase1", "phrase2"});
         notAvail.put("all", new String[]{"not available"});
         categoryToPhrases.put("storecategory", phrases);
-        categoryToPhrases.put("category not available", notAvail);
+        categoryToPhrases.put("category not available", notAvail);**/
     }
 
 
@@ -57,7 +57,9 @@ public class LocationProcessor {
     }
 
 
-    // TODO: Make nearby locations request
+    // TODO: Request never completes? Does not reach either the responseListener or the errorListener.
+    // TODO: Confirmed the request URL isn't the problem, and other known working requests also don't complete.
+    // TODO: So the problem is somewhere outside of this function.
     private void getLocationType(double lat, double lon, Context context) {
         String requestUrl = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&key=%s",
                 lat, lon, SEARCH_RADIUS, API_KEY);
