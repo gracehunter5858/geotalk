@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GeoTalk</string>
+    <string name="CONTEXT_TEXT_PRIMLANG">Primary language in this area</string>
 </resources>
