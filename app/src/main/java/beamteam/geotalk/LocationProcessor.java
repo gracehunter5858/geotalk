@@ -2,7 +2,9 @@ package beamteam.geotalk;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.android.volley.Request;
@@ -12,7 +14,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import beamteam.geotalk.db.AppDatabase;
+import beamteam.geotalk.db.Language;
+import beamteam.geotalk.db.LanguageDAO;
+import beamteam.geotalk.db.Location;
+import beamteam.geotalk.db.LocationDAO;
+import beamteam.geotalk.db.Phrase;
+import beamteam.geotalk.db.PhraseDAO;
 
 public class LocationProcessor {
 
@@ -23,44 +35,33 @@ public class LocationProcessor {
 
     private static final int SEARCH_RADIUS = 20; // in meters
     private static final String API_KEY = "AIzaSyDVp_TuxAxGKQT1gzrZGimApVQgNJoBxh4";
+    private static LocationCategorizer locationCategorizer = new LocationCategorizer();
 
-    private HashMap<String, String> locationTypeToCategory = new HashMap<>();
+    private LanguageDAO languageDAO;
+    private LocationDAO locationDAO;
+    private PhraseDAO phraseDAO;
 
-    // Category -> [Subcategory, [Phrases]]
-    private HashMap<String, HashMap<String, String[]>> categoryToPhrases = new HashMap<>();
-    private String locationType = null;
+    private ContextualActivity context;
 
 
-    LocationProcessor() {
-        // DEBUG:
-        /**locationTypeToCategory.put("storetype", "storecategory");
-        locationTypeToCategory.put("not available", "category not available");
-        HashMap<String, String[]> phrases = new HashMap<>();
-        HashMap<String, String[]> notAvail = new HashMap<>();
-        phrases.put("all", new String[]{"phrase1", "phrase2"});
-        notAvail.put("all", new String[]{"not available"});
-        categoryToPhrases.put("storecategory", phrases);
-        categoryToPhrases.put("category not available", notAvail);**/
+    LocationProcessor(ContextualActivity context) {
+        this.context = context;
+        languageDAO = AppDatabase.getInMemoryDatabase(context).getLanguageDAO();
+        locationDAO = AppDatabase.getInMemoryDatabase(context).getLocationDAO();
+        phraseDAO = AppDatabase.getInMemoryDatabase(context).getPhraseDAO();
+
+        // DEBUG
+        addDatabaseContent();
     }
 
-
-    // Subcategory -> [Phrases]
-    // Places for which subcategories are not needed: all phrases stored under subcategory "all"
-    Map<String, String[]> getPhrases(double lat, double lon, Context context) {
-        getLocationType(lat,lon, context);
-        while (locationType == null) {
-
-        }
-        String locationCategory = getLocationCategory(locationType);
-        locationType = null;
-        return getPhraseList(locationCategory);
+    // DEBUG
+    private void addDatabaseContent() {
+        languageDAO.insert(new Language("English"));
+        locationDAO.insert(new Location("cafe"));
+        phraseDAO.insert(new Phrase(2, "coffee", "English", "cafe", null));
     }
 
-
-    // TODO: Request never completes? Does not reach either the responseListener or the errorListener.
-    // TODO: Confirmed the request URL isn't the problem, and other known working requests also don't complete.
-    // TODO: So the problem is somewhere outside of this function.
-    private void getLocationType(double lat, double lon, Context context) {
+    void getUpdatedPhrases(double lat, double lon) {
         String requestUrl = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&key=%s",
                 lat, lon, SEARCH_RADIUS, API_KEY);
         System.out.println(requestUrl);
@@ -68,30 +69,48 @@ public class LocationProcessor {
         Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                extractLocationType(response);
+                String type = extractLocationType(response);
+                if (type != null) {
+                    String category = typeToCategory(type);
+                    if (category != context.currentLocationCategory) {
+                        context.updateUI(category, getPhrasesForCategory(category));
+                    }
+                }
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                locationType = "not available";
+
             }
         };
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, requestUrl, null, listener, errorListener);
         queue.add(jsonObjectRequest);
     }
 
-    // TODO: Process JSON response, setting locationType to the FIRST type of the FIRST location in list
-    private void extractLocationType(JSONObject response) {
-        locationType = "storetype";
+    // returns the FIRST type listed for the FIRST supported location returned
+    // if none of the locations returned are listed, returns null
+    private String extractLocationType(JSONObject response) {
+        try {
+            JSONArray results = response.getJSONArray("results");
+            for (int i = 0; i < results.length(); i++) {
+                String type = results.getJSONObject(i).getJSONArray("types").getString(0);
+                if (locationCategorizer.supportsType(type)) {
+                    return type;
+                }
+            }
+        } catch (JSONException e) {
+            System.out.println("JSON error");
+        }
+        return null;
     }
 
-    private String getLocationCategory(String locationType) {
-        return locationTypeToCategory.get(locationType);
+    private String typeToCategory(String type) {
+        return locationCategorizer.getCategory(type);
     }
 
-    private HashMap<String, String[]> getPhraseList(String locationCategory) {
-        return categoryToPhrases.get(locationCategory);
+    private List<Phrase> getPhrasesForCategory(String category) {
+        return phraseDAO.getAllLocationPhrases("English", category);
     }
 
 }

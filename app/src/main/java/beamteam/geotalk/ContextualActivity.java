@@ -4,16 +4,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
+import java.util.List;
 import java.util.Map;
+
+import beamteam.geotalk.db.Phrase;
 
 public class ContextualActivity extends AppCompatActivity {
 
-    private LocationProcessor locationProcessor = new LocationProcessor();
     private Map<String, String[]> phrases;
     private double lat = -33.8670522;
     private double lon = 151.1957362;
+    private LocationProcessor locationProcessor;
+
+    String currentLocationCategory = null;
 
     // TODO: Get current location
 
@@ -21,13 +25,16 @@ public class ContextualActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contextual);
-        phrases = locationProcessor.getPhrases(lat,lon, this);
-        String[] allPhraseList = phrases.get("all");
-        String allPhrasesConcat = "";
-        for (String phrase: allPhraseList) {
-            allPhrasesConcat += phrase;
-        }
+        locationProcessor = new LocationProcessor(this);
+        locationProcessor.getUpdatedPhrases(lat, lon);
+    }
+
+    // TODO
+    // LocationProcessor calls updateUI after each call to getUpdatedPhrases completes
+    void updateUI(String category, List<Phrase> phrases) {
+        currentLocationCategory = category;
+        //DEBUG:
         TextView phraseTextView = findViewById(R.id.phrases);
-        phraseTextView.setText(allPhrasesConcat);
+        phraseTextView.setText(phrases.get(0).phrase);
     }
 }
