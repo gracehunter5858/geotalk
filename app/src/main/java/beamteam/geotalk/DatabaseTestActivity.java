@@ -1,7 +1,9 @@
 package beamteam.geotalk;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.List;
 
@@ -57,5 +59,9 @@ public class DatabaseTestActivity extends AppCompatActivity {
         System.out.println(greetings);
         System.out.println(storePhrases);
         System.out.println(clothingStorePhrases);
+    }
+    public void ContextActivity(View view) {
+        Intent intent = new Intent(this, ContextualActivity.class);
+        startActivity(intent);
     }
 }
