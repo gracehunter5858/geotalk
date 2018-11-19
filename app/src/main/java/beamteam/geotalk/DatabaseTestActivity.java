@@ -15,7 +15,7 @@ import beamteam.geotalk.db.PhraseDAO;
 
 public class DatabaseTestActivity extends AppCompatActivity {
 
-    private LanguageDAO languageDAO;
+    /*private LanguageDAO languageDAO;
     private LocationDAO locationDAO;
     private PhraseDAO phraseDAO;
 
@@ -57,5 +57,5 @@ public class DatabaseTestActivity extends AppCompatActivity {
         System.out.println(greetings);
         System.out.println(storePhrases);
         System.out.println(clothingStorePhrases);
-    }
+    }*/
 }

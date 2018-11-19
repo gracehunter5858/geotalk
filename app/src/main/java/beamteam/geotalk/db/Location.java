@@ -1,19 +1,21 @@
 package beamteam.geotalk.db;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
+        import android.arch.persistence.room.Entity;
+
+        import java.util.List;
 
 
-@Entity
+@Entity (primaryKeys = {"category", "subcategory"})
 public class Location {
 
-    @PrimaryKey
-    @NonNull
-    public String name;
+    public String category;
+    public String subcategory;
+    public List<Integer> phraseIDs;
 
-    public Location(String name) {
-        this.name = name;
+    public Location(String category, String subcategory, List<Integer> phraseIDs) {
+        this.category = category;
+        this.subcategory = subcategory;
+        this.phraseIDs = phraseIDs;
     }
 
 }

@@ -7,12 +7,14 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
 
 @Dao
-public interface LocationDAO {
+public interface SavedPhraseDAO {
 
-    @Query("SELECT * FROM Location WHERE category=:locationCategory AND subcategory=:locationSubcategory")
-    int getLocation(String locationCategory, String locationSubcategory);
+    @Query("SELECT * FROM SavedPhrase WHERE userID=:userID AND language=:targetLanguage")
+    List<SavedPhrase> getSavedPhrases(int userID, int targetLanguage);
 
     @Insert
     void insert(Location location);
@@ -24,4 +26,3 @@ public interface LocationDAO {
     void update(Location location);
 
 }
-

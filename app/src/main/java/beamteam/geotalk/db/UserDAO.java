@@ -9,10 +9,10 @@ import android.arch.persistence.room.Update;
 
 
 @Dao
-public interface LocationDAO {
+public interface UserDAO {
 
-    @Query("SELECT * FROM Location WHERE category=:locationCategory AND subcategory=:locationSubcategory")
-    int getLocation(String locationCategory, String locationSubcategory);
+    @Query("SELECT * FROM User WHERE id=:id")
+    int getUser(int id);
 
     @Insert
     void insert(Location location);
@@ -24,4 +24,3 @@ public interface LocationDAO {
     void update(Location location);
 
 }
-
