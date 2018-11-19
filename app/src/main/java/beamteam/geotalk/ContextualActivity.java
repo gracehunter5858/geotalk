@@ -6,16 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
+import android.view.Window;
 
-import org.w3c.dom.Text;
-
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import beamteam.geotalk.db.LocationDAO;
+public class ContextualActivity extends AppCompatActivity implements  OnCategoryClickListner{
 
-public class ContextualActivity extends AppCompatActivity implements  OnCategoryClickListner {
     private static final String TAG = "ContextualAct";
     private LocationProcessor locationProcessor = new LocationProcessor();
     private Map<String, String[]> phrases;
@@ -31,17 +29,26 @@ public class ContextualActivity extends AppCompatActivity implements  OnCategory
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        System.out.println("=============================ACTIVITYSTART======================================");
         setContentView(R.layout.activity_contextual);
+        System.out.println("=============================GET PHRASES======================================");
 
         //get a map of subcategories -> phrases
-        phrases = locationProcessor.getPhrases(lat,lon, this);
-
+        //phrases = locationProcessor.getPhrases(lat,lon, this);
+        String[] ech = {"Where can I find baggage Claim?", "Where is the bathroom?", "What time is my flight departing?","How do I check in?"};
+        phrases = new HashMap<String,String[]>();
+        phrases.put("Boarding",ech);
+        phrases.put("Check-In",ech);
+        phrases.put("Food",ech);
+        phrases.put("Restroom",ech);
         //get a String list of subcategories
         Set<String> categoryKeys = phrases.keySet();
+        System.out.println("=============================GET CATEGORIES======================================");
+
         categories = categoryKeys.toArray(new String[categoryKeys.size()]);
 
         //get all phrases
-        String[] allPhraseList = phrases.get("all");
+        String[] allPhraseList = phrases.get("Boarding");
 
 
 
@@ -54,12 +61,12 @@ public class ContextualActivity extends AppCompatActivity implements  OnCategory
         initPhraseRecyclerView(currPhrases);
 
         /*** What it do down here
-        String allPhrasesConcat = "";
-        for (String phrase: allPhraseList) {
-            allPhrasesConcat += phrase;
-        }
-        TextView phraseTextView = findViewById(R.id.phrases);
-        phraseTextView.setText(allPhrasesConcat);
+         String allPhrasesConcat = "";
+         for (String phrase: allPhraseList) {
+         allPhrasesConcat += phrase;
+         }
+         TextView phraseTextView = findViewById(R.id.phrases);
+         phraseTextView.setText(allPhrasesConcat);
          **/
     }
     @Override
@@ -78,9 +85,9 @@ public class ContextualActivity extends AppCompatActivity implements  OnCategory
     private void initCategoryRecyclerView(String[] categories){
         Log.d(TAG,"init CategoryRecView");
         RecyclerView recyclerView = findViewById(R.id.RECYCLERVIEW_CATEGORY);
-        Phrases_Recycler_Adapter adapter = new Phrases_Recycler_Adapter(categories,this);
+        Category_Recycler_Adapter adapter = new Category_Recycler_Adapter(categories,this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
     }
 }
-
