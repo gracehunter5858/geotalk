@@ -57,8 +57,12 @@ public class LocationProcessor {
     // DEBUG
     private void addDatabaseContent() {
         languageDAO.insert(new Language("English"));
+        languageDAO.insert(new Language("Spanish"));
         locationDAO.insert(new Location("cafe"));
-        phraseDAO.insert(new Phrase(2, "coffee", "English", "cafe", null));
+        phraseDAO.insert(new Phrase(1, "muffin", "English", "cafe", "food"));
+        phraseDAO.insert(new Phrase(2, "coffee", "English", "cafe", "drink"));
+        phraseDAO.insert(new Phrase(3, "mollete", "Spanish", "cafe", "food"));
+        phraseDAO.insert(new Phrase(4, "café", "Spanish", "cafe", "drink"));
     }
 
     void getUpdatedPhrases(double lat, double lon) {
@@ -73,7 +77,13 @@ public class LocationProcessor {
                 if (type != null) {
                     String category = typeToCategory(type);
                     if (category != context.currentLocationCategory) {
-                        context.updateUI(category, getPhrasesForCategory(category));
+                        Map<String, List<Phrase>> phraseMapSourceLang = new HashMap<>();
+                        Map<String, List<Phrase>> phraseMapTargetLang = new HashMap<>();
+                        for (String subcategory : locationCategorizer.getSubcategories(category)) {
+                            phraseMapSourceLang.put(subcategory, getPhrasesForCategory(context.sourceLanguage, category, subcategory));
+                            phraseMapTargetLang.put(subcategory, getPhrasesForCategory(context.targetLanguage, category, subcategory));
+                        }
+                        context.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
                     }
                 }
             }
@@ -109,8 +119,8 @@ public class LocationProcessor {
         return locationCategorizer.getCategory(type);
     }
 
-    private List<Phrase> getPhrasesForCategory(String category) {
-        return phraseDAO.getAllLocationPhrases("English", category);
+    private List<Phrase> getPhrasesForCategory(String language, String category, String subcategory) {
+        return phraseDAO.getLocationPhrasesByCategory(language, category, subcategory);
     }
 
 }
