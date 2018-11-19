@@ -15,7 +15,7 @@ import java.util.Set;
 public class ContextualActivityTest extends AppCompatActivity implements  OnCategoryClickListner{
 
     private static final String TAG = "ContextualAct";
-    private LocationProcessor locationProcessor = new LocationProcessor();
+    private LocationProcessor locationProcessor ;
     private Map<String, String[]> phrases;
     private String[] currPhrases;
     private String[] categories;

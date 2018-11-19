@@ -1,73 +1,74 @@
 package beamteam.geotalk;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Window;
+import android.widget.TextView;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-public class ContextualActivity extends AppCompatActivity implements  OnCategoryClickListner{
+import beamteam.geotalk.db.Phrase;
 
+public class ContextualActivity extends AppCompatActivity implements  OnCategoryClickListner {
     private static final String TAG = "ContextualAct";
-    private LocationProcessor locationProcessor = new LocationProcessor();
-    private Map<String, String[]> phrases;
     private String[] currPhrases;
     private String[] categories;
-    private String[] selectedCategories;
+    private Map<String, String[]> phrases;
     private double lat = -33.8670522;
     private double lon = 151.1957362;
+    private LocationProcessor locationProcessor;
 
+    String currentLocationCategory = null;
+    String sourceLanguage;
+    String targetLanguage;
+
+    // TODO: Get source and target language when activity loads (can do this after the Wed deadline)
     // TODO: Get current location
+    // TODO: Listen for changes in location
+    // TODO: Call locationProcessor.getUpdatedPhrases(lat, lon) when the activity loads and every time the location changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        System.out.println("=============================ACTIVITYSTART======================================");
         setContentView(R.layout.activity_contextual);
-        System.out.println("=============================GET PHRASES======================================");
 
-        //get a map of subcategories -> phrases
-        //phrases = locationProcessor.getPhrases(lat,lon, this);
-        String[] ech = {"Where can I find baggage Claim?", "Where is the bathroom?", "What time is my flight departing?","How do I check in?"};
-        phrases = new HashMap<String,String[]>();
-        phrases.put("Boarding",ech);
-        phrases.put("Check-In",ech);
-        phrases.put("Food",ech);
-        phrases.put("Restroom",ech);
-        //get a String list of subcategories
-        Set<String> categoryKeys = phrases.keySet();
-        System.out.println("=============================GET CATEGORIES======================================");
+        // Placeholder
+        sourceLanguage = "English";
+        targetLanguage = "Spanish";
 
-        categories = categoryKeys.toArray(new String[categoryKeys.size()]);
+        locationProcessor = new LocationProcessor(this);
+        locationProcessor.getUpdatedPhrases(lat, lon);
+    }
 
-        //get all phrases
-        String[] allPhraseList = phrases.get("Boarding");
+    // TODO
+    // LocationProcessor calls updateUI after each call to getUpdatedPhrases completes
+    void updateUI(String category, Map<String, List<Phrase>> phraseMapSourceLang, Map<String, List<Phrase>> phraseMapTargetLang) {
+        currentLocationCategory = category;
 
+        //Get list of subcategories
+        categories = phraseMapSourceLang.keySet()
+                .toArray(new String[phraseMapSourceLang.keySet().size()]);
 
-
-        currPhrases = allPhraseList;
-
-
+        //initialize with list of first category
+        List<Phrase> phrasesList = phraseMapSourceLang.get(categories[0]);
+        currPhrases = new String[phrasesList.size()];
+        for(int i = 0;i<phrasesList.size();i++){
+            currPhrases[i] = phrasesList.get(i).phrase;
+        }
+        //INITIALIZE RECYCLERVIEWS
         Log.d(TAG,"Setting Categories");
         initCategoryRecyclerView(categories);
         Log.d(TAG,"Setting Phrases based on Categories");
         initPhraseRecyclerView(currPhrases);
 
-        /*** What it do down here
-         String allPhrasesConcat = "";
-         for (String phrase: allPhraseList) {
-         allPhrasesConcat += phrase;
-         }
-         TextView phraseTextView = findViewById(R.id.phrases);
-         phraseTextView.setText(allPhrasesConcat);
-         **/
+
+
+        //DEBUG:
+        TextView phraseTextView = findViewById(R.id.phrases);
+        phraseTextView.setText(phraseMapSourceLang.get("food").get(0).phrase + phraseMapTargetLang.get("food").get(0).phrase);
     }
     @Override
     public void onCatClick(int position){
