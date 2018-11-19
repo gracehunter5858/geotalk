@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="GeoTalkTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:colorBackground">@color/cardview_light_background</item>
+        <item name="android:colorPrimaryDark">@color/cardview_light_background</item>
+    </style>
+</resources>

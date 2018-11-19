@@ -36,12 +36,14 @@ public class Phrases_Recycler_Adapter extends RecyclerView.Adapter<Phrases_Recyc
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Log.d(TAG,"Phrase onBindVH Called");
         viewHolder.phrase_item_text.setText(phrases[i]);
-        viewHolder.phrase_layout.setOnClickListener(new View.OnClickListener() {
+        /**viewHolder.phrase_item_text.setText(phrases[i]);
+        viewHolder..setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Phrase Clicked On");
             }
         });
+         **/
     }
     //Called when new new list created via filters
     public void newPhraseList(String[] newList){

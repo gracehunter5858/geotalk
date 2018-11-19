@@ -61,7 +61,7 @@ public class DatabaseTestActivity extends AppCompatActivity {
         System.out.println(clothingStorePhrases);
     }
     public void ContextActivity(View view) {
-        Intent intent = new Intent(this, ContextualActivity.class);
+        Intent intent = new Intent(this, ContextualActivityTest.class);
         startActivity(intent);
     }
 }

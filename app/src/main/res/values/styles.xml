@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="GeoTalkTheme" parent="android:Theme.NoTitleBar" >
+        <item name="android:colorBackground">@color/cardview_light_background</item>
+    </style>
+
 </resources>

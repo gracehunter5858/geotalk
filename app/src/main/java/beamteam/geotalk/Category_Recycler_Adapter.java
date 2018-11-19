@@ -42,6 +42,7 @@ public class Category_Recycler_Adapter extends RecyclerView.Adapter<Category_Rec
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder catViewHolder, final int i) {
         Log.d(TAG,"Category onBindVH Called");
+        catViewHolder.category_item_text.setText(categoryList[i]);
         catViewHolder.category_layout.setOnClickListener(new View.OnClickListener() {
             /**REQUIRES API21 OR HIGHER*/
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
