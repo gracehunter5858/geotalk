@@ -11,13 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 
 public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecyclerAdapter.ViewHolder>{
     private static final String TAG = "PhrRecAdapt";
-    private String[] phrases;
+    private List<String> phrases;
     private Context mContext;
 
-    public PhrasesRecyclerAdapter(String[] phrases, Context mContext) {
+    public PhrasesRecyclerAdapter(List<String> phrases, Context mContext) {
         this.phrases = phrases;
         this.mContext = mContext;
     }
@@ -34,24 +36,24 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Log.d(TAG,"Phrase onBindVH Called");
-        /*viewHolder.phrase_item_text.setText(phrases[i]);
-        viewHolder.phrase_item_text.setText(phrases[i]);
-        viewHolder.setOnClickListener(new View.OnClickListener() {
+        viewHolder.phrase_item_text.setText(phrases.get(i));
+        /*viewHolder.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
         Log.d(TAG, "Phrase Clicked On");
         }
         });*/
     }
+
     //Called when new new list created via filters
-    public void newPhraseList(String[] newList){
+    public void newPhraseList(List<String> newList){
         this.phrases = newList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return phrases.length;
+        return phrases.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

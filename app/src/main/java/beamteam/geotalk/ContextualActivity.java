@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import beamteam.geotalk.db.Phrase;
 
@@ -16,10 +18,7 @@ public class
 ContextualActivity extends AppCompatActivity implements OnCategoryClickListener {
 
     private static final String TAG = "ContextualAct";
-    private String[] currPhrases;
-    private String[] categories;
 
-    private Map<String, String[]> phrases;
     private double lat = -33.8670522;
     private double lon = 151.1957362;
     private LocationProcessor locationProcessor;
@@ -53,21 +52,17 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
 
         currentLocationCategory = category;
 
-        //Get list of subcategories
-        categories = phraseMapSourceLang.keySet()
-                .toArray(new String[phraseMapSourceLang.keySet().size()]);
-
-        //initialize with list of first category
-        List<Phrase> phrasesList = phraseMapSourceLang.get(categories[0]);
-        currPhrases = new String[phrasesList.size()];
-        for(int i = 0;i<phrasesList.size();i++){
-            currPhrases[i] = phrasesList.get(i).phrase;
+        // With updated database (after Wed), instead of Map<String, List<Phrase>>, LocationProcessor will provide Map<String, List<String>> directly
+        List<String> categories = new ArrayList(phraseMapSourceLang.keySet());
+        List<Phrase> currPhrases = phraseMapSourceLang.get(categories.get(0));
+        List<String> currPhraseStrings = new ArrayList<>();
+        for (Phrase phrase : currPhrases) {
+            currPhraseStrings.add(phrase.phrase);
         }
-        //INITIALIZE RECYCLERVIEWS
-        Log.d(TAG,"Setting Categories");
+
+        // Initialize Recyclerviews
         initCategoryRecyclerView(categories);
-        Log.d(TAG,"Setting Phrases based on Categories");
-        initPhraseRecyclerView(currPhrases);
+        initPhraseRecyclerView(currPhraseStrings);
     }
 
     @Override
@@ -76,7 +71,7 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
     }
 
     /**Initialize Recyclerview for Categories and Phrases**/
-    private void initPhraseRecyclerView(String[] currPhrases){
+    private void initPhraseRecyclerView(List<String> currPhrases){
         Log.d(TAG,"init PhraseRecView");
         RecyclerView recyclerView = findViewById(R.id.RECYCLERVIEW_PHRASES);
         PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(currPhrases,this);
@@ -84,7 +79,7 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void initCategoryRecyclerView(String[] categories){
+    private void initCategoryRecyclerView(List<String> categories){
         Log.d(TAG,"init CategoryRecView");
         RecyclerView recyclerView = findViewById(R.id.RECYCLERVIEW_CATEGORY);
         CategoryRecyclerAdapter adapter = new CategoryRecyclerAdapter(categories,this);

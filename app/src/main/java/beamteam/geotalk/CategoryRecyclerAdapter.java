@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.ViewHolder>{
     private static final String TAG = "CatRecAdapt";
-    private String[] categoryList;
+    private List<String> categoryList;
     private Context mContext;
     private OnCategoryClickListener onCatClickListener;
-    public CategoryRecyclerAdapter(String[] categoryList,Context context) {
+    public CategoryRecyclerAdapter(List<String> categoryList,Context context) {
         this.categoryList = categoryList;
         this.mContext = context;
     }
@@ -34,7 +36,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder catViewHolder, final int i) {
         Log.d(TAG,"Category onBindVH Called");
-        catViewHolder.category_item_text.setText(categoryList[i]);
+        catViewHolder.category_item_text.setText(categoryList.get(i));
         catViewHolder.category_layout.setOnClickListener(new View.OnClickListener() {
             /**REQUIRES API21 OR HIGHER*/
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -60,7 +62,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
     @Override
     public int getItemCount() {
-        return categoryList.length;
+        return categoryList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

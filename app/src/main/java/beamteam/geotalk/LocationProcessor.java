@@ -73,7 +73,7 @@ public class LocationProcessor {
         Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println("request succesful");
+                System.out.println("request successful");
                 String type = extractLocationType(response);
                 if (type != null) {
                     String category = typeToCategory(type);
