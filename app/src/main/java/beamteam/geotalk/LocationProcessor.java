@@ -77,14 +77,8 @@ public class LocationProcessor {
                 String type = extractLocationType(response);
                 if (type != null) {
                     String category = typeToCategory(type);
-                    if (category != context.currentLocationCategory) {
-                        Map<String, List<Phrase>> phraseMapSourceLang = new HashMap<>();
-                        Map<String, List<Phrase>> phraseMapTargetLang = new HashMap<>();
-                        for (String subcategory : locationCategorizer.getSubcategories(category)) {
-                            phraseMapSourceLang.put(subcategory, getPhrasesForCategory(context.sourceLanguage, category, subcategory));
-                            phraseMapTargetLang.put(subcategory, getPhrasesForCategory(context.targetLanguage, category, subcategory));
-                        }
-                        context.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
+                    if (category != null) {
+                        setPhrasesForCategory(category);
                     }
                 }
             }
@@ -97,6 +91,22 @@ public class LocationProcessor {
         };
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, requestUrl, null, listener, errorListener);
         queue.add(jsonObjectRequest);
+    }
+
+    void manuallyChangeLocation(String locationCategory) {
+        setPhrasesForCategory(locationCategory);
+    }
+
+    private void setPhrasesForCategory(String category) {
+        if (category != context.currentLocationCategory) {
+            Map<String, List<Phrase>> phraseMapSourceLang = new HashMap<>();
+            Map<String, List<Phrase>> phraseMapTargetLang = new HashMap<>();
+            for (String subcategory : locationCategorizer.getSubcategories(category)) {
+                phraseMapSourceLang.put(subcategory, getPhrasesForCategory(context.sourceLanguage, category, subcategory));
+                phraseMapTargetLang.put(subcategory, getPhrasesForCategory(context.targetLanguage, category, subcategory));
+            }
+            context.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
+        }
     }
 
     // returns the FIRST type listed for the FIRST supported location returned

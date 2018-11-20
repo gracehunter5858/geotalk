@@ -54,15 +54,19 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
 
         // With updated database (after Wed), instead of Map<String, List<Phrase>>, LocationProcessor will provide Map<String, List<String>> directly
         List<String> categories = new ArrayList(phraseMapSourceLang.keySet());
-        List<Phrase> currPhrases = phraseMapSourceLang.get(categories.get(0));
-        List<String> currPhraseStrings = new ArrayList<>();
-        for (Phrase phrase : currPhrases) {
-            currPhraseStrings.add(phrase.phrase);
+        String firstCat = categories.get(0);
+        List<Phrase> sourcePhrases = phraseMapSourceLang.get(firstCat);
+        List<Phrase> targetPhrases = phraseMapTargetLang.get(firstCat);
+        List<String> targetPhraseStrings = new ArrayList<>();
+        List<String> sourcePhraseStrings = new ArrayList<>();
+        for (int i = 0; i < sourcePhrases.size(); i++) {
+            sourcePhraseStrings.add(sourcePhrases.get(i).phrase);
+            targetPhraseStrings.add(targetPhrases.get(i).phrase);
         }
 
         // Initialize Recyclerviews
         initCategoryRecyclerView(categories);
-        initPhraseRecyclerView(currPhraseStrings);
+        initPhraseRecyclerView(sourcePhraseStrings, targetPhraseStrings);
     }
 
     @Override
@@ -71,10 +75,10 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
     }
 
     /**Initialize Recyclerview for Categories and Phrases**/
-    private void initPhraseRecyclerView(List<String> currPhrases){
+    private void initPhraseRecyclerView(List<String> sourcePhrases, List<String> targetPhrases){
         Log.d(TAG,"init PhraseRecView");
         RecyclerView recyclerView = findViewById(R.id.RECYCLERVIEW_PHRASES);
-        PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(currPhrases,this);
+        PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(sourcePhrases, targetPhrases, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

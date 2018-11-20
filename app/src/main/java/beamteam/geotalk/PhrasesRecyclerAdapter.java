@@ -16,11 +16,13 @@ import java.util.List;
 
 public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecyclerAdapter.ViewHolder>{
     private static final String TAG = "PhrRecAdapt";
-    private List<String> phrases;
+    private List<String> sourcePhrases;
+    private List<String> targetPhrases;
     private Context mContext;
 
-    public PhrasesRecyclerAdapter(List<String> phrases, Context mContext) {
-        this.phrases = phrases;
+    public PhrasesRecyclerAdapter(List<String> sourcePhrases, List<String> targetPhrases, Context mContext) {
+        this.sourcePhrases = sourcePhrases;
+        this.targetPhrases = targetPhrases;
         this.mContext = mContext;
     }
 
@@ -28,7 +30,7 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.phrase_layout_item,viewGroup,false);
+                .inflate(R.layout.phrase_layout_item, viewGroup,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -36,7 +38,8 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Log.d(TAG,"Phrase onBindVH Called");
-        viewHolder.phrase_item_text.setText(phrases.get(i));
+        viewHolder.source_phrase_textview.setText(sourcePhrases.get(i));
+        viewHolder.target_phrase_textview.setText(targetPhrases.get(i));
         /*viewHolder.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -46,22 +49,25 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     }
 
     //Called when new new list created via filters
-    public void newPhraseList(List<String> newList){
-        this.phrases = newList;
+    public void newPhraseList(List<String> newSourceList, List<String> newTargetList){
+        this.sourcePhrases = newSourceList;
+        this.targetPhrases = newTargetList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return phrases.size();
+        return sourcePhrases.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView phrase_item_text;
+        TextView source_phrase_textview;
+        TextView target_phrase_textview;
         ConstraintLayout phrase_layout;
         public ViewHolder(View itemView){
             super(itemView);
-            phrase_item_text = itemView.findViewById(R.id.TEXT_PHRASE_ITEM);
+            source_phrase_textview = itemView.findViewById(R.id.SOURCE_LANG_PHRASE);
+            target_phrase_textview = itemView.findViewById(R.id.TARGET_LANG_PHRASE);
         }
     }
 }
