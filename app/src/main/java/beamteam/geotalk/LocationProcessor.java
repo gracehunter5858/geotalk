@@ -73,6 +73,7 @@ public class LocationProcessor {
         Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                System.out.println("request succesful");
                 String type = extractLocationType(response);
                 if (type != null) {
                     String category = typeToCategory(type);
@@ -91,7 +92,7 @@ public class LocationProcessor {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                System.out.println("request failed");
             }
         };
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, requestUrl, null, listener, errorListener);

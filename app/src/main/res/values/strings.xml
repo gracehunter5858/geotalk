@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">GeoTalk</string>
     <string name="CONTEXT_TEXT_PRIMLANG">Primary language in this area</string>
+    <string name="TEXT_PHRASE_ITEM">SAMPLE PHRASE</string>
+    <string name="TEXT_CATEGORY">Category</string>
+    <string name="TITLE_FILTER">FILTER</string>
+    <string name="TITLE_PHRASES">EXPRESSIONS</string>
 </resources>
