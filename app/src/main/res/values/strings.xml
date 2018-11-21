@@ -6,4 +6,5 @@
     <string name="TEXT_CATEGORY">Category</string>
     <string name="TITLE_FILTER">FILTER</string>
     <string name="TITLE_PHRASES">EXPRESSIONS</string>
+    <string name="TITLE_CATEGORIES">CATEGORIES</string>
 </resources>
