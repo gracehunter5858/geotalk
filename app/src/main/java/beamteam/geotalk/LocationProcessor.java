@@ -35,7 +35,6 @@ public class LocationProcessor {
 
     private static final int SEARCH_RADIUS = 20; // in meters
     private static final String API_KEY = "AIzaSyDVp_TuxAxGKQT1gzrZGimApVQgNJoBxh4";
-    private static LocationCategorizer locationCategorizer = new LocationCategorizer();
 
     private LanguageDAO languageDAO;
     private LocationDAO locationDAO;
@@ -101,7 +100,7 @@ public class LocationProcessor {
         if (category != context.currentLocationCategory) {
             Map<String, List<Phrase>> phraseMapSourceLang = new HashMap<>();
             Map<String, List<Phrase>> phraseMapTargetLang = new HashMap<>();
-            for (String subcategory : locationCategorizer.getSubcategories(category)) {
+            for (String subcategory : LocationCategorizer.getSubcategories(category)) {
                 phraseMapSourceLang.put(subcategory, getPhrasesForCategory(context.sourceLanguage, category, subcategory));
                 phraseMapTargetLang.put(subcategory, getPhrasesForCategory(context.targetLanguage, category, subcategory));
             }
@@ -116,7 +115,7 @@ public class LocationProcessor {
             JSONArray results = response.getJSONArray("results");
             for (int i = 0; i < results.length(); i++) {
                 String type = results.getJSONObject(i).getJSONArray("types").getString(0);
-                if (locationCategorizer.supportsType(type)) {
+                if (LocationCategorizer.supportsType(type)) {
                     return type;
                 }
             }
@@ -127,7 +126,7 @@ public class LocationProcessor {
     }
 
     private String typeToCategory(String type) {
-        return locationCategorizer.getCategory(type);
+        return LocationCategorizer.getCategory(type);
     }
 
     private List<Phrase> getPhrasesForCategory(String language, String category, String subcategory) {
