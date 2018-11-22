@@ -24,11 +24,15 @@ public class ProfileActivity extends Activity {
 
         Spinner sourceSpinner = (Spinner) findViewById(R.id.sourcelangs);
         Spinner targetSpinner = (Spinner) findViewById(R.id.targetlangs);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.languages, R.layout.spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sourceSpinner.setAdapter(adapter);
-        targetSpinner.setAdapter(adapter);
+        ArrayAdapter<CharSequence> sourceAdapter = ArrayAdapter.createFromResource(this,
+                R.array.fromlanguages, R.layout.spinner_item);
+        ArrayAdapter<CharSequence> targetAdapter = ArrayAdapter.createFromResource(this,
+                R.array.tolanguages, R.layout.spinner_item);
+
+        sourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        targetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sourceSpinner.setAdapter(sourceAdapter);
+        targetSpinner.setAdapter(targetAdapter);
     }
 
 }
