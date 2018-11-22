@@ -13,13 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ContextualActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".DatabaseTestActivity">
         </activity>
         <activity android:name=".SavedActivity"></activity>
-        <activity android:name=".ContextualActivity"></activity>
-        <activity android:name=".DatabaseTestActivity" />
         <activity android:name=".GeneralActivity" />
         <activity
             android:name=".ProfileActivity"
@@ -27,10 +29,7 @@
         <activity
             android:name=".Translate"
             android:label="@string/title_activity_translate">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
     </application>
 
