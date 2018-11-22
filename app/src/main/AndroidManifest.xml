@@ -3,7 +3,7 @@
     package="beamteam.geotalk">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,10 +17,18 @@
 
         <activity android:name=".DatabaseTestActivity">
         </activity>
-        <activity android:name=".SavedActivity">
+        <activity android:name=".SavedActivity"></activity>
+        <activity android:name=".ContextualActivity"></activity>
+        <activity android:name=".DatabaseTestActivity" />
+        <activity android:name=".GeneralActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile"/>
+        <activity
+            android:name=".Translate"
+            android:label="@string/title_activity_translate">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
