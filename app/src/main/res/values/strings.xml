@@ -7,4 +7,20 @@
     <string name="TITLE_FILTER">FILTER</string>
     <string name="TITLE_PHRASES">EXPRESSIONS</string>
     <string name="TITLE_CATEGORIES">CATEGORIES</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="PhotoName">Placeholder Name</string>
+    <string name="Source_Lang_Header">I speak and understand</string>
+    <string name="Target_Lang_Header">Target language</string>
+    <string name="Target_Lang_Blurb">automatically assign a language to translate to</string>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+        <item>Japanese</item>
+        <item>Vietnamese</item>
+        <item>Chinese</item>
+        <item>Korean</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Russian</item>
+    </string-array>
 </resources>
