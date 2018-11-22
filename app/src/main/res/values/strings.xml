@@ -6,4 +6,8 @@
     <string name="TEXT_CATEGORY">Category</string>
     <string name="TITLE_FILTER">FILTER</string>
     <string name="TITLE_PHRASES">EXPRESSIONS</string>
+    <string-array name="filters">
+        <item>Most Recent</item>
+        <item>Most Popular</item>
+    </string-array>
 </resources>
