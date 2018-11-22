@@ -26,8 +26,8 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
 
     private static final String TAG = "ContextualAct";
 
-    //private double lat = -33.8670522;
-    //private double lon = 151.1957362;
+    private double lat = -33.8670522;
+    private double lon = 151.1957362;
     private LocationProcessor locationProcessor;
 
     static final int REQUEST_LOCATION = 1;
@@ -67,7 +67,9 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
                     return;
                 }
                 Location location = locationResult.getLocations().get(0);
-                locationProcessor.getUpdatedPhrases(location.getLatitude(), location.getLongitude());
+                // Khang's changes for screenshot
+//                locationProcessor.getUpdatedPhrases(location.getLatitude(), location.getLongitude());
+                locationProcessor.getUpdatedPhrases(lat, lon);
             }
         };
         startLocationUpdates();
@@ -93,15 +95,19 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
         currentLocationCategory = category;
 
         // With updated database (after Wed), instead of Map<String, List<Phrase>>, LocationProcessor will provide Map<String, List<String>> directly
-        List<String> categories = new ArrayList(phraseMapSourceLang.keySet());
-        String firstCat = categories.get(0);
-        List<Phrase> sourcePhrases = phraseMapSourceLang.get(firstCat);
-        List<Phrase> targetPhrases = phraseMapTargetLang.get(firstCat);
         List<String> targetPhraseStrings = new ArrayList<>();
         List<String> sourcePhraseStrings = new ArrayList<>();
-        for (int i = 0; i < sourcePhrases.size(); i++) {
-            sourcePhraseStrings.add(sourcePhrases.get(i).phrase);
-            targetPhraseStrings.add(targetPhrases.get(i).phrase);
+        List<String> categories = new ArrayList(phraseMapSourceLang.keySet());
+        // Khang's changes for screenshot
+        for (String firstCat : categories) {
+//            String firstCat = categories.get(0);
+            List<Phrase> sourcePhrases = phraseMapSourceLang.get(firstCat);
+            List<Phrase> targetPhrases = phraseMapTargetLang.get(firstCat);
+
+            for (int i = 0; i < sourcePhrases.size(); i++) {
+                sourcePhraseStrings.add(sourcePhrases.get(i).phrase);
+                targetPhraseStrings.add(targetPhrases.get(i).phrase);
+            }
         }
 
         // Initialize Recyclerviews
