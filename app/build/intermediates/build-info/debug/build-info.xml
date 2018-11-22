@@ -2,11 +2,11 @@
 <instant-run
     abi="x86"
     api-level="28"
-    build-mode="COLD"
+    build-mode="FULL"
     density="420dpi"
     format="10"
     plugin-version="3.1.4"
-    timestamp="1542870303690"
+    timestamp="1542872874372"
     token="-4654162293233089660"
     verifier="COLD_SWAP_REQUESTED" >
 
@@ -24,16 +24,19 @@
         duration="0" />
 
     <artifact
-        location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
+        location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
         type="SPLIT" />
     <artifact
-        location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
+        location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
         type="SPLIT" />
     <artifact
         location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
         type="SPLIT" />
     <artifact
         location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
+        type="SPLIT" />
+    <artifact
+        location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
         type="SPLIT" />
     <artifact
         location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
@@ -62,16 +65,13 @@
 
     <build
         build-mode="FULL"
-        timestamp="1542868929569"
-        verifier="FULL_BUILD_REQUESTED" >
+        timestamp="1542872874372"
+        verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
             type="SPLIT" />
         <artifact
             location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
             type="SPLIT" />
         <artifact
             location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
@@ -80,53 +80,7 @@
             location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
             type="SPLIT" />
         <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_8.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/instant-run-apk/debug/app-debug.apk"
-            type="SPLIT_MAIN" />
-    </build>
-    <build
-        build-mode="COLD"
-        timestamp="1542869435997"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
-            type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        timestamp="1542870303690"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
-            type="SPLIT" />
-        <artifact
             location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
-            type="SPLIT" />
-        <artifact
-            location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
             type="SPLIT" />
         <artifact
             location="/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/split-apk/debug/slices/slice_3.apk"

@@ -36,8 +36,7 @@
         <activity android:name="beamteam.geotalk.GeneralActivity" />
         <activity
             android:name="beamteam.geotalk.ProfileActivity"
-            android:label="@string/title_activity_profile" >
-        </activity>
+            android:label="@string/title_activity_profile" />
         <activity
             android:name="beamteam.geotalk.Translate"
             android:label="@string/title_activity_translate" />

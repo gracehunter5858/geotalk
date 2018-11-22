@@ -32,7 +32,7 @@
             android:label="@string/title_activity_profile"/>
         <activity
             android:name=".Translate"
-            android:label="@string/title_activity_translate">
+            android:label="@string/title_activity_translate"/>
 
 
     </application>

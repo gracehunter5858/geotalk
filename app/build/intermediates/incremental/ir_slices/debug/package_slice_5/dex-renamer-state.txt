@@ -1,4 +1,4 @@
-#Wed Nov 21 23:05:12 PST 2018
-base.0=/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/transforms/dexMerger/debug/5
+#Wed Nov 21 23:48:05 PST 2018
+base.0=/Users/khangnguyen/AndroidStudioProjects/CS160/geotalk/app/build/intermediates/transforms/dexMerger/debug/22
 path.0=classes.dex
 renamed.0=classes.dex
