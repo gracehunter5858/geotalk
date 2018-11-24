@@ -11,16 +11,16 @@ import android.arch.persistence.room.Update;
 @Dao
 public interface TranslationDAO {
 
-    @Query("SELECT * FROM Translation WHERE phraseID=:phraseID AND language=:language")
-    int getTranslation(int phraseID, String language);
+    @Query("SELECT translation FROM translations WHERE phraseID=:phraseID AND language=:language")
+    String getTranslation(int phraseID, String language);
 
     @Insert
-    void insert(Location location);
+    void insert(Translation translation);
 
     @Delete
-    void delete(Location location);
+    void delete(Translation translation);
 
     @Update
-    void update(Location location);
+    void update(Translation translation);
 
 }

@@ -11,16 +11,13 @@ import android.arch.persistence.room.Update;
 @Dao
 public interface UserDAO {
 
-    @Query("SELECT * FROM User WHERE id=:id")
-    int getUser(int id);
-
     @Insert
-    void insert(Location location);
+    void insert(User user);
 
     @Delete
-    void delete(Location location);
+    void delete(User user);
 
     @Update
-    void update(Location location);
+    void update(User user);
 
 }

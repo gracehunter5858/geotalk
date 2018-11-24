@@ -13,16 +13,16 @@ import java.util.List;
 @Dao
 public interface SavedPhraseDAO {
 
-    @Query("SELECT * FROM SavedPhrase WHERE userID=:userID AND language=:targetLanguage")
-    List<SavedPhrase> getSavedPhrases(int userID, int targetLanguage);
+    @Query("SELECT phraseID FROM saved_phrases WHERE userID=:userID AND language=:targetLanguage")
+    List<Integer> getSavedPhraseIDs(int userID, int targetLanguage);
 
     @Insert
-    void insert(Location location);
+    void insert(SavedPhrase savedPhrase);
 
     @Delete
-    void delete(Location location);
+    void delete(SavedPhrase savedPhrase);
 
     @Update
-    void update(Location location);
+    void update(SavedPhrase savedPhrase);
 
 }
