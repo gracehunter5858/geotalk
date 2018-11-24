@@ -66,7 +66,7 @@ public class LocationCategorizer {
         map.put("grocery", new String[] {"all"});
         map.put("store", new String[] {"all"});
         map.put("transportation", new String[] {"all"});
-        map.put("restaurant", new String[] {"all", "food", "drink"});
+        map.put("restaurant", new String[] {"food"});
         map.put("clothing_store", new String[] {"all"});
         map.put("medical", new String[] {"all"});
         map.put("hotel", new String[] {"all"});

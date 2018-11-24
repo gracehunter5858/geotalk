@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import beamteam.geotalk.db.Phrase;
-
 public class
 ContextualActivity extends AppCompatActivity implements OnCategoryClickListener {
 
@@ -50,6 +48,8 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contextual);
 
+        System.out.println("launched");
+
         // Placeholder
         sourceLanguage = "English";
         targetLanguage = "Spanish";
@@ -60,6 +60,8 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();
 
+        locationProcessor.getUpdatedPhrases(lat, lon);
+
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -67,8 +69,8 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
                     return;
                 }
                 Location location = locationResult.getLocations().get(0);
-                // Khang's changes for screenshot
-//                locationProcessor.getUpdatedPhrases(location.getLatitude(), location.getLongitude());
+                //locationProcessor.getUpdatedPhrases(location.getLatitude(), location.getLongitude());
+                // DEBUG:
                 locationProcessor.getUpdatedPhrases(lat, lon);
             }
         };
@@ -90,29 +92,17 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener 
 
     // TODO
     // LocationProcessor calls updateUI after each call to getUpdatedPhrases completes
-    void updateUI(String category, Map<String, List<Phrase>> phraseMapSourceLang, Map<String, List<Phrase>> phraseMapTargetLang) {
+    void updateUI(String category, Map<String, List<String>> phraseMapSourceLang, Map<String, List<String>> phraseMapTargetLang) {
 
         currentLocationCategory = category;
 
-        // With updated database (after Wed), instead of Map<String, List<Phrase>>, LocationProcessor will provide Map<String, List<String>> directly
-        List<String> targetPhraseStrings = new ArrayList<>();
-        List<String> sourcePhraseStrings = new ArrayList<>();
         List<String> categories = new ArrayList(phraseMapSourceLang.keySet());
-        // Khang's changes for screenshot
-        for (String firstCat : categories) {
-//            String firstCat = categories.get(0);
-            List<Phrase> sourcePhrases = phraseMapSourceLang.get(firstCat);
-            List<Phrase> targetPhrases = phraseMapTargetLang.get(firstCat);
-
-            for (int i = 0; i < sourcePhrases.size(); i++) {
-                sourcePhraseStrings.add(sourcePhrases.get(i).phrase);
-                targetPhraseStrings.add(targetPhrases.get(i).phrase);
-            }
-        }
+        List<String> targetPhrases = phraseMapTargetLang.get(categories.get(0));
+        List<String> sourcePhrases = phraseMapSourceLang.get(categories.get(0));
 
         // Initialize Recyclerviews
         initCategoryRecyclerView(categories);
-        initPhraseRecyclerView(sourcePhraseStrings, targetPhraseStrings);
+        initPhraseRecyclerView(sourcePhrases, targetPhrases);
     }
 
     @Override
