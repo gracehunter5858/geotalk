@@ -57,14 +57,15 @@ public class LocationProcessor {
     private void addDatabaseContent() {
         languageDAO.insert(new Language("English"));
         languageDAO.insert(new Language("Spanish"));
-        locationDAO.insert(new Location("cafe"));
-        phraseDAO.insert(new Phrase(1, "muffin", "English", "cafe", "food"));
-        phraseDAO.insert(new Phrase(2, "coffee", "English", "cafe", "drink"));
-        phraseDAO.insert(new Phrase(3, "mollete", "Spanish", "cafe", "food"));
-        phraseDAO.insert(new Phrase(4, "café", "Spanish", "cafe", "drink"));
+        locationDAO.insert(new Location("restaurant"));
+        phraseDAO.insert(new Phrase(1, "muffin", "English", "restaurant", "food"));
+        phraseDAO.insert(new Phrase(2, "coffee", "English", "restaurant", "drink"));
+        phraseDAO.insert(new Phrase(3, "mollete", "Spanish", "restaurant", "food"));
+        phraseDAO.insert(new Phrase(4, "café", "Spanish", "restaurant", "drink"));
     }
 
     void getUpdatedPhrases(double lat, double lon) {
+        System.out.println("getUpdatedphrases");
         String requestUrl = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&key=%s",
                 lat, lon, SEARCH_RADIUS, API_KEY);
         System.out.println(requestUrl);
@@ -97,6 +98,9 @@ public class LocationProcessor {
     }
 
     private void setPhrasesForCategory(String category) {
+        System.out.println("Category: " + category);
+        System.out.println("Context Cat: " + context.currentLocationCategory);
+
         if (category != context.currentLocationCategory) {
             Map<String, List<Phrase>> phraseMapSourceLang = new HashMap<>();
             Map<String, List<Phrase>> phraseMapTargetLang = new HashMap<>();

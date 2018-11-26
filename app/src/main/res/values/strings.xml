@@ -6,4 +6,17 @@
     <string name="TEXT_CATEGORY">Category</string>
     <string name="TITLE_FILTER">FILTER</string>
     <string name="TITLE_PHRASES">EXPRESSIONS</string>
+    <string name="TEXT_CATEGORIES">CATEGORIES</string>
+    <string name="TITLE_GENERAL">General</string>
+    <string name="TITLE_Context">Context</string>
+    <string name="TITLE_SAVED">Saved</string>
+    <string name="title_activity_bottom_nav">BottomNav</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="TITLE_Translate">Translate</string>
+    <string name="TITLE_PROFILE">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
