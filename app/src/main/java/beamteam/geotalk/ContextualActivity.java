@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 public class
 ContextualActivity extends AppCompatActivity implements OnCategoryClickListener{
 
@@ -61,11 +63,6 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener{
         sourceLanguage = "English";
         targetLanguage = "Spanish";
 
-
-
-
-
-
         locationProcessor = new LocationProcessor(this);
         //locationProcessor.getUpdatedPhrases(lat, lon);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -99,8 +96,8 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener{
     }
 
     private void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         }
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
     }
