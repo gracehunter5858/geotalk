@@ -19,12 +19,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import beamteam.geotalk.db.AppDatabase;
-import beamteam.geotalk.db.Language;
-import beamteam.geotalk.db.LanguageDAO;
-import beamteam.geotalk.db.Location;
-import beamteam.geotalk.db.LocationDAO;
-import beamteam.geotalk.db.Phrase;
-import beamteam.geotalk.db.PhraseDAO;
+import beamteam.geotalk.db.Category;
+import beamteam.geotalk.db.CategoryDAO;
+import beamteam.geotalk.db.PhraseByCategory;
+import beamteam.geotalk.db.PhraseByCategoryDAO;
+import beamteam.geotalk.db.Translation;
+import beamteam.geotalk.db.TranslationDAO;
 
 public class LocationProcessor {
 
@@ -36,18 +36,18 @@ public class LocationProcessor {
     private static final int SEARCH_RADIUS = 20; // in meters
     private static final String API_KEY = "AIzaSyDVp_TuxAxGKQT1gzrZGimApVQgNJoBxh4";
 
-    private LanguageDAO languageDAO;
-    private LocationDAO locationDAO;
-    private PhraseDAO phraseDAO;
+    private CategoryDAO categoryDAO;
+    private PhraseByCategoryDAO phraseByCategoryDAO;
+    private TranslationDAO translationDAO;
 
     private ContextualActivity context;
 
 
     LocationProcessor(ContextualActivity context) {
         this.context = context;
-        languageDAO = AppDatabase.getInMemoryDatabase(context).getLanguageDAO();
-        locationDAO = AppDatabase.getInMemoryDatabase(context).getLocationDAO();
-        phraseDAO = AppDatabase.getInMemoryDatabase(context).getPhraseDAO();
+        categoryDAO = AppDatabase.getInMemoryDatabase(context).getCategoryDAO();
+        phraseByCategoryDAO = AppDatabase.getInMemoryDatabase(context).getPhraseByCategoryDAO();
+        translationDAO = AppDatabase.getInMemoryDatabase(context).getTranslationDAO();
 
         // DEBUG
         addDatabaseContent();
@@ -55,13 +55,12 @@ public class LocationProcessor {
 
     // DEBUG
     private void addDatabaseContent() {
-        languageDAO.insert(new Language("English"));
-        languageDAO.insert(new Language("Spanish"));
-        locationDAO.insert(new Location("restaurant"));
-        phraseDAO.insert(new Phrase(1, "muffin", "English", "restaurant", "food"));
-        phraseDAO.insert(new Phrase(2, "coffee", "English", "restaurant", "drink"));
-        phraseDAO.insert(new Phrase(3, "mollete", "Spanish", "restaurant", "food"));
-        phraseDAO.insert(new Phrase(4, "café", "Spanish", "restaurant", "drink"));
+
+        categoryDAO.insert(new Category("restaurant", "food"));
+        int catID = categoryDAO.getCatID("restaurant", "food");
+        translationDAO.insert(new Translation(1, "English", "muffin"));
+        translationDAO.insert(new Translation(1, "Spanish", "mollete"));
+        phraseByCategoryDAO.insert(new PhraseByCategory(catID, 1));
     }
 
     void getUpdatedPhrases(double lat, double lon) {
@@ -78,6 +77,7 @@ public class LocationProcessor {
                 if (type != null) {
                     String category = typeToCategory(type);
                     if (category != null) {
+                        System.out.println(category);
                         setPhrasesForCategory(category);
                     }
                 }
@@ -98,15 +98,25 @@ public class LocationProcessor {
     }
 
     private void setPhrasesForCategory(String category) {
-        System.out.println("Category: " + category);
-        System.out.println("Context Cat: " + context.currentLocationCategory);
+        if (!category.equals(context.currentLocationCategory)) {
+            Map<String, List<String>> phraseMapSourceLang = new HashMap<>();
+            Map<String, List<String>> phraseMapTargetLang = new HashMap<>();
 
-        if (category != context.currentLocationCategory) {
-            Map<String, List<Phrase>> phraseMapSourceLang = new HashMap<>();
-            Map<String, List<Phrase>> phraseMapTargetLang = new HashMap<>();
             for (String subcategory : LocationCategorizer.getSubcategories(category)) {
-                phraseMapSourceLang.put(subcategory, getPhrasesForCategory(context.sourceLanguage, category, subcategory));
-                phraseMapTargetLang.put(subcategory, getPhrasesForCategory(context.targetLanguage, category, subcategory));
+
+                List<String> phraseListSourceLang = new ArrayList<>();
+                List<String> phraseListTargetLang = new ArrayList<>();
+                int catID = categoryDAO.getCatID(category, subcategory);
+                List<Integer> phraseIDs = phraseByCategoryDAO.getPhraseIDsForCatID(catID);
+
+                for (int id: phraseIDs) {
+                    System.out.println(id);
+                    phraseListSourceLang.add(translationDAO.getTranslation(id, context.sourceLanguage));
+                    phraseListTargetLang.add(translationDAO.getTranslation(id, context.targetLanguage));
+                }
+
+                phraseMapSourceLang.put(subcategory, phraseListSourceLang);
+                phraseMapTargetLang.put(subcategory, phraseListTargetLang);
             }
             context.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
         }
@@ -131,10 +141,6 @@ public class LocationProcessor {
 
     private String typeToCategory(String type) {
         return LocationCategorizer.getCategory(type);
-    }
-
-    private List<Phrase> getPhrasesForCategory(String language, String category, String subcategory) {
-        return phraseDAO.getLocationPhrasesByCategory(language, category, subcategory);
     }
 
 }

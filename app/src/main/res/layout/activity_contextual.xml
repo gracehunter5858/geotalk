@@ -20,7 +20,8 @@
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.17000002">
 
         <EditText
             android:id="@+id/CONTEXT_TEXTINPUT_LOCATION"
@@ -143,7 +144,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/RECYCLERVIEW_CATEGORY"
             android:layout_width="0dp"
-            android:layout_height="98dp"
+            android:layout_height="94dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
@@ -159,9 +160,11 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="354dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="224dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
@@ -170,6 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/TITLE_PHRASES"
@@ -180,20 +184,102 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/RECYCLERVIEW_PHRASES"
             android:layout_width="0dp"
-            android:layout_height="291dp"
+            android:layout_height="194dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phrases" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/GeneralButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/CategoryButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <ImageButton
+            android:id="@+id/CategoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/GeneralButton"
+            app:layout_constraintEnd_toStartOf="@+id/SavedButton"
+            app:layout_constraintStart_toEndOf="@+id/GeneralButton"
+            app:layout_constraintTop_toTopOf="@+id/GeneralButton"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <ImageButton
+            android:id="@+id/SavedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/CategoryButton"
+            app:layout_constraintEnd_toStartOf="@+id/TranslateButton"
+            app:layout_constraintStart_toEndOf="@+id/CategoryButton"
+            app:layout_constraintTop_toTopOf="@+id/CategoryButton"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <ImageButton
+            android:id="@+id/TranslateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/SavedButton"
+            app:layout_constraintEnd_toStartOf="@+id/ProfileButton"
+            app:layout_constraintStart_toEndOf="@+id/SavedButton"
+            app:layout_constraintTop_toTopOf="@+id/SavedButton"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <ImageButton
+            android:id="@+id/ProfileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/TranslateButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/TranslateButton"
+            app:layout_constraintTop_toTopOf="@+id/TranslateButton"
+            app:srcCompat="@android:drawable/btn_star" />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

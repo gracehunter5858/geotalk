@@ -1,21 +1,10 @@
 package beamteam.geotalk;
 
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import java.util.List;
-
-import beamteam.geotalk.db.AppDatabase;
-import beamteam.geotalk.db.Language;
-import beamteam.geotalk.db.LanguageDAO;
-import beamteam.geotalk.db.Location;
-import beamteam.geotalk.db.LocationDAO;
-import beamteam.geotalk.db.Phrase;
-import beamteam.geotalk.db.PhraseDAO;
 
 public class DatabaseTestActivity extends AppCompatActivity {
 
-    private LanguageDAO languageDAO;
+    /*private LanguageDAO languageDAO;
     private LocationDAO locationDAO;
     private PhraseDAO phraseDAO;
 
@@ -57,5 +46,5 @@ public class DatabaseTestActivity extends AppCompatActivity {
         System.out.println(greetings);
         System.out.println(storePhrases);
         System.out.println(clothingStorePhrases);
-    }
+    }*/
 }

@@ -19,4 +19,37 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="filters">
+        <item>Most Recent</item>
+        <item>Most Popular</item>
+    </string-array>
+    <string name="TITLE_CATEGORIES">CATEGORIES</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="PhotoName">Placeholder Name</string>
+    <string name="Source_Lang_Header">I speak and understand</string>
+    <string name="Target_Lang_Header">Target language</string>
+    <string name="Target_Lang_Blurb">automatically assign a language to translate to</string>
+    <string-array name="fromlanguages">
+        <item>English</item>
+        <item>Spanish</item>
+        <item>Japanese</item>
+        <item>Vietnamese</item>
+        <item>Chinese</item>
+        <item>Korean</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Russian</item>
+    </string-array>
+    <string-array name="tolanguages">
+        <item>Spanish</item>
+        <item>Japanese</item>
+        <item>Vietnamese</item>
+        <item>Chinese</item>
+        <item>Korean</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Russian</item>
+    </string-array>
+    <string name="title_activity_translate">Translate</string>
 </resources>

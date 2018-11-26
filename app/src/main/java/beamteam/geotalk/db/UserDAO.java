@@ -1,3 +1,4 @@
+
 package beamteam.geotalk.db;
 
 import android.arch.persistence.room.Dao;
@@ -6,19 +7,17 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-@Dao
-public interface LanguageDAO {
 
-    @Query("SELECT * FROM Language WHERE name=:name")
-    Language getLanguage(String name);
+@Dao
+public interface UserDAO {
 
     @Insert
-    void insert(Language language);
+    void insert(User user);
 
     @Delete
-    void delete(Language language);
+    void delete(User user);
 
     @Update
-    void update(Language language);
+    void update(User user);
 
 }

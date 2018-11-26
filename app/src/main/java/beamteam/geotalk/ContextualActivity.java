@@ -26,17 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import beamteam.geotalk.db.Phrase;
-
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-
 public class
 ContextualActivity extends AppCompatActivity implements OnCategoryClickListener{
 
     private static final String TAG = "ContextualAct";
 
-    //private double lat = -33.8670522;
-    //private double lon = 151.1957362;
+    private double lat = -33.8670522;
+    private double lon = 151.1957362;
     private LocationProcessor locationProcessor;
 
     static final int REQUEST_LOCATION = 1;
@@ -59,6 +55,8 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener{
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_contextual);
 
+        System.out.println("launched");
+
         // Placeholder
         sourceLanguage = "English";
         targetLanguage = "Spanish";
@@ -77,19 +75,8 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener{
             return;
         }
 
-      /**  fusedLocationClient.getLastLocation().addOnSuccessListener(ContextualActivity.this,
-                new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if(location != null){
-                            locationProcessor.getUpdatedPhrases(location.getLatitude(), location.getLongitude());
-                        }else{
-                            System.out.println("Location Null");
-                        }
-                    }
-                }
-        );**/
-        locationRequest = LocationRequest.create();
+
+        locationProcessor.getUpdatedPhrases(lat, lon);
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -97,7 +84,9 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener{
                     return;
                 }
                 Location location = locationResult.getLocations().get(0);
-                locationProcessor.getUpdatedPhrases(location.getLatitude(), location.getLongitude());
+                //locationProcessor.getUpdatedPhrases(location.getLatitude(), location.getLongitude());
+                // DEBUG:
+                locationProcessor.getUpdatedPhrases(lat, lon);
             }
         };
         startLocationUpdates();
@@ -118,25 +107,17 @@ ContextualActivity extends AppCompatActivity implements OnCategoryClickListener{
 
     // TODO
     // LocationProcessor calls updateUI after each call to getUpdatedPhrases completes
-    void updateUI(String category, Map<String, List<Phrase>> phraseMapSourceLang, Map<String, List<Phrase>> phraseMapTargetLang) {
+    void updateUI(String category, Map<String, List<String>> phraseMapSourceLang, Map<String, List<String>> phraseMapTargetLang) {
 
         currentLocationCategory = category;
 
-        // With updated database (after Wed), instead of Map<String, List<Phrase>>, LocationProcessor will provide Map<String, List<String>> directly
         List<String> categories = new ArrayList(phraseMapSourceLang.keySet());
-        String firstCat = categories.get(0);
-        List<Phrase> sourcePhrases = phraseMapSourceLang.get(firstCat);
-        List<Phrase> targetPhrases = phraseMapTargetLang.get(firstCat);
-        List<String> targetPhraseStrings = new ArrayList<>();
-        List<String> sourcePhraseStrings = new ArrayList<>();
-        for (int i = 0; i < sourcePhrases.size(); i++) {
-            sourcePhraseStrings.add(sourcePhrases.get(i).phrase);
-            targetPhraseStrings.add(targetPhrases.get(i).phrase);
-        }
+        List<String> targetPhrases = phraseMapTargetLang.get(categories.get(0));
+        List<String> sourcePhrases = phraseMapSourceLang.get(categories.get(0));
 
         // Initialize Recyclerviews
         initCategoryRecyclerView(categories);
-        initPhraseRecyclerView(sourcePhraseStrings, targetPhraseStrings);
+        initPhraseRecyclerView(sourcePhrases, targetPhrases);
     }
 
     @Override

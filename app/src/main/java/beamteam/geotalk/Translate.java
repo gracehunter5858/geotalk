@@ -1,15 +1,14 @@
 package beamteam.geotalk;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.app.Activity;
 
-
-public class GeneralActivity extends AppCompatActivity {
+public class Translate extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_general);
+        setContentView(R.layout.activity_translate);
     }
 
 }
