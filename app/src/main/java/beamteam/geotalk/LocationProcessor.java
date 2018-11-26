@@ -55,6 +55,7 @@ public class LocationProcessor {
 
     // DEBUG
     private void addDatabaseContent() {
+
         categoryDAO.insert(new Category("restaurant", "food"));
         int catID = categoryDAO.getCatID("restaurant", "food");
         translationDAO.insert(new Translation(1, "English", "muffin"));
@@ -63,6 +64,7 @@ public class LocationProcessor {
     }
 
     void getUpdatedPhrases(double lat, double lon) {
+        System.out.println("getUpdatedphrases");
         String requestUrl = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&key=%s",
                 lat, lon, SEARCH_RADIUS, API_KEY);
         System.out.println(requestUrl);

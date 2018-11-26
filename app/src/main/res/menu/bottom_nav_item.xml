@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item
+        android:id="@+id/General"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="@string/TITLE_GENERAL" />
+    <item
+        android:id="@+id/Context"
+        android:icon="@drawable/googleg_standard_color_18"
+        android:title="@string/TITLE_Context" />
+    <item
+        android:id="@+id/Translate"
+        android:icon="@drawable/googleg_disabled_color_18"
+        android:title="@string/TITLE_Translate" />
+    <item
+        android:id="@+id/Saved"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/TITLE_SAVED" />
+    <item
+        android:id="@+id/Profile"
+        android:icon="@android:drawable/star_big_off"
+        android:title="@string/TITLE_PROFILE" />
+</menu>

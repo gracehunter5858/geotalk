@@ -3,6 +3,7 @@ package beamteam.geotalk;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+
 public class GeneralActivity extends AppCompatActivity {
 
     @Override
@@ -10,4 +11,5 @@ public class GeneralActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general);
     }
+
 }
