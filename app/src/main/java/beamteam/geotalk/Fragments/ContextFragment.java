@@ -77,7 +77,7 @@ public class ContextFragment extends Fragment {
         // Placeholder
         sourceLanguage = "English";
         targetLanguage = "Spanish";
-        locationProcessor = new LocationProcessor(getContext());
+        locationProcessor = new LocationProcessor(getActivity());
         //locationProcessor.getUpdatedPhrases(lat, lon);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         if (ActivityCompat.checkSelfPermission(getActivity(),
@@ -125,7 +125,6 @@ public class ContextFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-
 
     }
 
