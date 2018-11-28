@@ -43,7 +43,7 @@ public class LocationProcessor {
     private ContextualActivity context;
 
 
-    LocationProcessor(ContextualActivity context) {
+    public LocationProcessor(ContextualActivity context) {
         this.context = context;
         categoryDAO = AppDatabase.getInMemoryDatabase(context).getCategoryDAO();
         phraseByCategoryDAO = AppDatabase.getInMemoryDatabase(context).getPhraseByCategoryDAO();
