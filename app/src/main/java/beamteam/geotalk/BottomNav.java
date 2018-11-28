@@ -9,6 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import beamteam.geotalk.Fragments.ContextFragment;
+import beamteam.geotalk.Fragments.GeneralFragment;
+import beamteam.geotalk.Fragments.ProfileFragment;
+import beamteam.geotalk.Fragments.SavedFragment;
+import beamteam.geotalk.Fragments.TranslateFragment;
+
 import static android.support.design.bottomnavigation.LabelVisibilityMode.LABEL_VISIBILITY_LABELED;
 
 public class BottomNav extends AppCompatActivity {

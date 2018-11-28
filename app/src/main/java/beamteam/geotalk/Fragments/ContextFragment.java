@@ -1,7 +1,5 @@
-package beamteam.geotalk;
+package beamteam.geotalk.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +10,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+
+import beamteam.geotalk.LocationProcessor;
+import beamteam.geotalk.R;
 
 
 public class ContextFragment extends Fragment {
@@ -34,8 +35,7 @@ public class ContextFragment extends Fragment {
     String targetLanguage;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
 
 
     public ContextFragment() {

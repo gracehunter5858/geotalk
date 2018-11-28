@@ -1,5 +1,5 @@
 
-package beamteam.geotalk;
+package beamteam.geotalk.Recycler;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import beamteam.geotalk.R;
 
 
 public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecyclerAdapter.ViewHolder>{

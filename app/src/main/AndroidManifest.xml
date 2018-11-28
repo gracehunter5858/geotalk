@@ -17,7 +17,6 @@
             android:windowSoftInputMode="adjustNothing">
         </activity>
         <activity android:name=".DatabaseTestActivity" />
-        <activity android:name=".GeneralActivity" />
         <activity
             android:name=".BottomNav"
             android:label="@string/title_activity_bottom_nav"

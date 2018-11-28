@@ -3,22 +3,22 @@
     >
     <item
         android:id="@+id/General"
-        android:icon="@android:drawable/ic_btn_speak_now"
+        android:icon="@drawable/home_solid"
         android:title="@string/TITLE_GENERAL" />
     <item
         android:id="@+id/Context"
-        android:icon="@drawable/googleg_standard_color_18"
+        android:icon="@drawable/location_solid"
         android:title="@string/TITLE_Context" />
     <item
         android:id="@+id/Translate"
-        android:icon="@drawable/googleg_disabled_color_18"
+        android:icon="@drawable/translate_solid"
         android:title="@string/TITLE_Translate" />
     <item
         android:id="@+id/Saved"
-        android:icon="@android:drawable/ic_menu_share"
+        android:icon="@drawable/saved_solid"
         android:title="@string/TITLE_SAVED" />
     <item
         android:id="@+id/Profile"
-        android:icon="@android:drawable/star_big_off"
+        android:icon="@drawable/profile_solid"
         android:title="@string/TITLE_PROFILE" />
 </menu>
