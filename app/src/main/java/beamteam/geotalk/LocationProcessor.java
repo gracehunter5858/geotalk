@@ -1,7 +1,5 @@
 package beamteam.geotalk;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,14 +38,14 @@ public class LocationProcessor {
     private PhraseByCategoryDAO phraseByCategoryDAO;
     private TranslationDAO translationDAO;
 
-    private ContextualActivity context;
+    private ContextFragment contextFrag;
 
 
-    public LocationProcessor(ContextualActivity context) {
-        this.context = context;
-        categoryDAO = AppDatabase.getInMemoryDatabase(context).getCategoryDAO();
-        phraseByCategoryDAO = AppDatabase.getInMemoryDatabase(context).getPhraseByCategoryDAO();
-        translationDAO = AppDatabase.getInMemoryDatabase(context).getTranslationDAO();
+    public LocationProcessor(ContextFragment contextFrag) {
+        this.contextFrag = contextFrag;
+        categoryDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getCategoryDAO();
+        phraseByCategoryDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getPhraseByCategoryDAO();
+        translationDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getTranslationDAO();
 
         // DEBUG
         addDatabaseContent();
@@ -68,7 +66,7 @@ public class LocationProcessor {
         String requestUrl = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&key=%s",
                 lat, lon, SEARCH_RADIUS, API_KEY);
         System.out.println(requestUrl);
-        RequestQueue queue = Volley.newRequestQueue(context);
+        RequestQueue queue = Volley.newRequestQueue(contextFrag.getContext());
         Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -98,7 +96,7 @@ public class LocationProcessor {
     }
 
     private void setPhrasesForCategory(String category) {
-        if (!category.equals(context.currentLocationCategory)) {
+        if (!category.equals(contextFrag.currentLocationCategory)) {
             Map<String, List<String>> phraseMapSourceLang = new HashMap<>();
             Map<String, List<String>> phraseMapTargetLang = new HashMap<>();
 
@@ -111,14 +109,14 @@ public class LocationProcessor {
 
                 for (int id: phraseIDs) {
                     System.out.println(id);
-                    phraseListSourceLang.add(translationDAO.getTranslation(id, context.sourceLanguage));
-                    phraseListTargetLang.add(translationDAO.getTranslation(id, context.targetLanguage));
+                    phraseListSourceLang.add(translationDAO.getTranslation(id, contextFrag.sourceLanguage));
+                    phraseListTargetLang.add(translationDAO.getTranslation(id, contextFrag.targetLanguage));
                 }
 
                 phraseMapSourceLang.put(subcategory, phraseListSourceLang);
                 phraseMapTargetLang.put(subcategory, phraseListTargetLang);
             }
-            context.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
+            contextFrag.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
         }
     }
 

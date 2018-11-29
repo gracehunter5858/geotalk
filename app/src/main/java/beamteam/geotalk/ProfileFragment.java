@@ -1,4 +1,4 @@
-package beamteam.geotalk.Fragments;
+package beamteam.geotalk;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,15 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import beamteam.geotalk.R;
-
-
-public class TranslateFragment extends Fragment {
-    public TranslateFragment() {
+public class ProfileFragment extends Fragment {
+    public ProfileFragment() {
         // Required empty public constructor
     }
-    public static TranslateFragment newInstance() {
-        TranslateFragment fragment = new TranslateFragment();
+
+    public static ProfileFragment newInstance() {
+        ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -31,9 +29,8 @@ public class TranslateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_translate, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
-
 
 
 }

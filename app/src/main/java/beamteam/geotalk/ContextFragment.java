@@ -1,4 +1,4 @@
-package beamteam.geotalk.Fragments;
+package beamteam.geotalk;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -23,9 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import beamteam.geotalk.ContextualActivity;
-import beamteam.geotalk.LocationProcessor;
-import beamteam.geotalk.R;
 import beamteam.geotalk.Recycler.CategoryRecyclerAdapter;
 import beamteam.geotalk.Recycler.PhrasesRecyclerAdapter;
 
@@ -77,7 +74,7 @@ public class ContextFragment extends Fragment {
         // Placeholder
         sourceLanguage = "English";
         targetLanguage = "Spanish";
-        locationProcessor = new LocationProcessor(getActivity());
+        locationProcessor = new LocationProcessor(this);
         //locationProcessor.getUpdatedPhrases(lat, lon);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         if (ActivityCompat.checkSelfPermission(getActivity(),
