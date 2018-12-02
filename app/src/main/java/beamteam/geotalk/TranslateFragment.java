@@ -2,9 +2,15 @@ package beamteam.geotalk;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -18,12 +24,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 
 public class TranslateFragment extends Fragment {
 
     String API_KEY = "trnsl.1.1.20181129T011924Z.decd2856686aa882.fbeb4537e22c61892dcaa42e7605cc2a310eae51";
-    TextView test;
-
+    TextView output;
+    String sourceLang;
+    String targetLang;
+    String sourceLetter;
+    String targetLetter;
+    HashMap<String, String> getLetter;
 
     public TranslateFragment() {
         // Required empty public constructor
@@ -49,21 +61,95 @@ public class TranslateFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_translate, container, false);
 
-        TextView textView = (TextView) view.findViewById(R.id.translatetest);
-        // TODO: Move copy and paste components from activity_translate to fragment_translate
-//        Spinner sourceSpinner = (Spinner) view.findViewById(R.id.fromlangs);
-//        Spinner targetSpinner = (Spinner) view.findViewById(R.id.tolangs);
-//
-//        String sourceLang = sourceSpinner.getSelectedItem().toString();
-//        String targetlang = targetSpinner.getSelectedItem().toString();
-//
-        String phrase = textView.getText().toString();
-//
-        test = textView;
+        // Deal with the Spinners
+        getLetter = new HashMap<>();
+        setLanguages();
 
-        translate(phrase, "en", "es");
+        final Spinner sourceSpinner = (Spinner) view.findViewById(R.id.fromlangs);
+        final Spinner targetSpinner = (Spinner) view.findViewById(R.id.tolangs);
+
+        sourceSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sourceLang = sourceSpinner.getSelectedItem().toString();
+                sourceLetter = getLetter.get(sourceLang);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        targetSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                targetLang = targetSpinner.getSelectedItem().toString();
+                targetLetter = getLetter.get(targetLang);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // Get button to switch languages
+        Button switchButton = (Button) view.findViewById(R.id.switchButton);
+
+        switchButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tempSource = sourceLang;
+                sourceSpinner.setSelection(getIndex(sourceSpinner, targetLang));
+                targetSpinner.setSelection(getIndex(targetSpinner, tempSource));
+            }
+        });
+
+        // Get text input and output views
+        TextView translateView = (TextView) view.findViewById(R.id.output);
+        final EditText input = (EditText) view.findViewById(R.id.input);
+
+        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    String phrase = input.getText().toString();
+                    translate(phrase, sourceLetter, targetLetter);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        output = translateView;
+
 
         return view;
+    }
+
+    private int getIndex(Spinner spinner, String lang){
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(lang)){
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    void setLanguages() {
+        getLetter.put("English", "en");
+        getLetter.put("Spanish", "es");
+        getLetter.put("Japanese", "ja");
+        getLetter.put("Vietnamese", "vi");
+        getLetter.put("Chinese", "zh");
+        getLetter.put("Korean", "ko");
+        getLetter.put("French", "fr");
+        getLetter.put("Italian", "it");
+        getLetter.put("Russian", "ru");
     }
 
     void translate(String phrase, String sourceLang, String targetLang) {
@@ -76,7 +162,7 @@ public class TranslateFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println("request successful");
-                setText(response, test);
+                setText(response, output);
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
