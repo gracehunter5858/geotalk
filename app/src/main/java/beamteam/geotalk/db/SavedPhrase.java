@@ -9,12 +9,16 @@ public class SavedPhrase {
     public int userID;
     public int phraseID;
     @NonNull
-    public String language;
+    public int language;
+    public String source;
+    public String target;
 
-    public SavedPhrase(int userID, int phraseID, String language) {
+    public SavedPhrase(int userID, int phraseID, int language, String source, String target) {
         this.userID = userID;
         this.phraseID = phraseID;
         this.language = language;
+        this.source = source;
+        this.target = target;
     }
 
 }
