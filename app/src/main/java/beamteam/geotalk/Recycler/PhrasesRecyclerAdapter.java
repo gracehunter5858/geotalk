@@ -9,11 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.List;
 
 import beamteam.geotalk.R;
+import beamteam.geotalk.db.AppDatabase;
+import beamteam.geotalk.db.SavedPhrase;
+import beamteam.geotalk.db.SavedPhraseDAO;
 
 
 public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecyclerAdapter.ViewHolder>{
@@ -21,11 +26,13 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     private List<String> sourcePhrases;
     private List<String> targetPhrases;
     private Context mContext;
+    private SavedPhraseDAO savedPhraseDAO;
 
     public PhrasesRecyclerAdapter(List<String> sourcePhrases, List<String> targetPhrases, Context mContext) {
         this.sourcePhrases = sourcePhrases;
         this.targetPhrases = targetPhrases;
         this.mContext = mContext;
+        this.savedPhraseDAO = AppDatabase.getInMemoryDatabase(mContext).getSavedPhraseDAO();
     }
 
     @NonNull
@@ -37,11 +44,32 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         return viewHolder;
     }
 
+    public boolean isDuplicate(String phrase) {
+        List<String> phrases = savedPhraseDAO.getSourcePhrases(1, 1);
+        return phrases.contains(phrase);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Log.d(TAG,"Phrase onBindVH Called");
+        final int position = i;
         viewHolder.source_phrase_textview.setText(sourcePhrases.get(i));
         viewHolder.target_phrase_textview.setText(targetPhrases.get(i));
+        viewHolder.chkSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                String source = sourcePhrases.get(position);
+                String target = targetPhrases.get(position);
+                if (checked) {
+                    if (!isDuplicate(source)) {
+                        savedPhraseDAO.insert(new SavedPhrase(1, 1, 1, source, target));
+                    }
+
+                } else {
+                    savedPhraseDAO.delete(new SavedPhrase(1, 1, 1, source, target));
+                }
+            }
+        });
         /*viewHolder.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -65,11 +93,13 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView source_phrase_textview;
         TextView target_phrase_textview;
+        CheckBox chkSelected;
         ConstraintLayout phrase_layout;
         public ViewHolder(View itemView){
             super(itemView);
             source_phrase_textview = itemView.findViewById(R.id.SOURCE_LANG_PHRASE);
             target_phrase_textview = itemView.findViewById(R.id.TARGET_LANG_PHRASE);
+            chkSelected = itemView.findViewById(R.id.chkSelected);
         }
     }
 }
