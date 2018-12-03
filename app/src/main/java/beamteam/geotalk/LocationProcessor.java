@@ -40,6 +40,9 @@ public class LocationProcessor {
 
     private ContextFragment contextFrag;
 
+    private Map<String, List<String>> phraseMapSourceLang;
+    private Map<String, List<String>> phraseMapTargetLang;
+
 
     public LocationProcessor(ContextFragment contextFrag) {
         this.contextFrag = contextFrag;
@@ -97,8 +100,10 @@ public class LocationProcessor {
 
     private void setPhrasesForCategory(String category) {
         if (!category.equals(contextFrag.currentLocationCategory)) {
-            Map<String, List<String>> phraseMapSourceLang = new HashMap<>();
-            Map<String, List<String>> phraseMapTargetLang = new HashMap<>();
+//            Map<String, List<String>> phraseMapSourceLang = new HashMap<>();
+//            Map<String, List<String>> phraseMapTargetLang = new HashMap<>();
+            phraseMapSourceLang = new HashMap<>();
+            phraseMapTargetLang = new HashMap<>();
 
             for (String subcategory : LocationCategorizer.getSubcategories(category)) {
 
@@ -116,8 +121,9 @@ public class LocationProcessor {
                 phraseMapSourceLang.put(subcategory, phraseListSourceLang);
                 phraseMapTargetLang.put(subcategory, phraseListTargetLang);
             }
-            contextFrag.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
+//            contextFrag.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
         }
+        contextFrag.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
     }
 
     // returns the FIRST type listed for the FIRST supported location returned

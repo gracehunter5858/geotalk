@@ -14,6 +14,11 @@ import static android.support.design.bottomnavigation.LabelVisibilityMode.LABEL_
 public class BottomNav extends AppCompatActivity {
 
     private TextView mTextMessage;
+    Fragment GeneralFrag;
+    Fragment ContextFrag;
+    Fragment TranslateFrag;
+    Fragment ProfileFrag;
+    Fragment SavedFrag;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -21,25 +26,46 @@ public class BottomNav extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
+            String tag = "temp";
             switch (item.getItemId()) {
                 case R.id.General:
-                    selectedFragment = GeneralFragment.newInstance();
+                    if (GeneralFrag == null) {
+                        GeneralFrag = GeneralFragment.newInstance();
+                    }
+                    tag = "General";
+                    selectedFragment = GeneralFrag;
                     break;
                 case R.id.Context:
-                    selectedFragment = ContextFragment.newInstance();
+                    if (ContextFrag == null) {
+                        ContextFrag = ContextFragment.newInstance();
+                    }
+                    tag = "Context";
+                    selectedFragment = ContextFrag;
                     break;
                 case R.id.Translate:
-                    selectedFragment = TranslateFragment.newInstance();
+                    if (TranslateFrag == null) {
+                        TranslateFrag = TranslateFragment.newInstance();
+                    }
+                    tag = "Translate";
+                    selectedFragment = TranslateFrag;
                     break;
                 case R.id.Profile:
-                    selectedFragment = ProfileFragment.newInstance();
+                    if (ProfileFrag == null) {
+                        ProfileFrag = ProfileFragment.newInstance();
+                    }
+                    tag = "Profile";
+                    selectedFragment = ProfileFrag;
                     break;
                 case R.id.Saved:
-                    selectedFragment = SavedFragment.newInstance();
+                    if (SavedFrag == null) {
+                        SavedFrag = SavedFragment.newInstance();
+                    }
+                    tag = "Saved";
+                    selectedFragment = SavedFrag;
                     break;
             }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frag_layout, selectedFragment);
+            transaction.replace(R.id.frag_layout, selectedFragment).addToBackStack(tag);
             transaction.commit();
             return true;
         }

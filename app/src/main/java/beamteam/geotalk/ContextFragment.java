@@ -75,7 +75,7 @@ public class ContextFragment extends Fragment {
         sourceLanguage = "English";
         targetLanguage = "Spanish";
         locationProcessor = new LocationProcessor(this);
-        //locationProcessor.getUpdatedPhrases(lat, lon);
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 ACCESS_FINE_LOCATION) !=
@@ -83,8 +83,7 @@ public class ContextFragment extends Fragment {
             return;
         }
 
-
-        locationProcessor.getUpdatedPhrases(lat, lon);
+//        locationProcessor.getUpdatedPhrases(lat, lon);
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -97,7 +96,7 @@ public class ContextFragment extends Fragment {
                 locationProcessor.getUpdatedPhrases(lat, lon);
             }
         };
-        startLocationUpdates();
+//        startLocationUpdates();
 
     }
 
@@ -115,6 +114,7 @@ public class ContextFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        locationProcessor.getUpdatedPhrases(lat, lon);
         startLocationUpdates();
     }
 
