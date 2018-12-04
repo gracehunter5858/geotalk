@@ -28,6 +28,7 @@ import beamteam.geotalk.db.SavedPhrase;
 import beamteam.geotalk.db.SavedPhraseDAO;
 import beamteam.geotalk.db.Translation;
 import beamteam.geotalk.db.TranslationDAO;
+import beamteam.geotalk.db.UserDAO;
 
 public class GeneralFragment extends Fragment {
     private SavedPhraseDAO savedPhraseDAO;
@@ -37,8 +38,8 @@ public class GeneralFragment extends Fragment {
     private ContextFragment contextFrag;
     private HashMap<String, String> phraseToCat;
 
-    private String sourceLanguage = "English";
-    private String targetLanguage = "Korean";
+    private String sourceLanguage;
+    private String targetLanguage;
 
     public GeneralFragment() {
         // Required empty public constructor
@@ -68,6 +69,11 @@ public class GeneralFragment extends Fragment {
         this.categoryDAO = db.getCategoryDAO();
         this.phraseByCategoryDAO = db.getPhraseByCategoryDAO();
         this.translationDAO = db.getTranslationDAO();
+
+        UserDAO userDAO = AppDatabase.getInstance(getContext()).getUserDao();
+        sourceLanguage = userDAO.getUserByID(1).sourceLanguage;
+        targetLanguage = userDAO.getUserByID(1).targetLanguage;
+
         //addDatabaseContent();
         if (getArguments() != null) {
 
@@ -85,19 +91,19 @@ public class GeneralFragment extends Fragment {
         Map<String, List<String>> phraseMapTargetLang = new HashMap<>();
 
         // Get all subcategories
-        List<CategoryTuple> categories = categoryDAO.getCategories();
-        for (CategoryTuple ct : categories) {
+        List<String> categories = categoryDAO.getSubcategories("general");
+        for (String ct : categories) {
             List<String> phraseListSourceLang = new ArrayList<>();
             List<String> phraseListTargetLang = new ArrayList<>();
 
-            int catID = categoryDAO.getCatID(ct.cat, ct.subcat);
+            int catID = categoryDAO.getCatID("general", ct);
             List<Integer> phraseIDs = phraseByCategoryDAO.getPhraseIDsForCatID(catID);
             for (int id : phraseIDs) {
                 phraseListSourceLang.add(translationDAO.getTranslation(id, sourceLanguage));
                 phraseListTargetLang.add(translationDAO.getTranslation(id, targetLanguage));
             }
-            phraseMapSourceLang.put(ct.subcat, phraseListSourceLang);
-            phraseMapTargetLang.put(ct.subcat, phraseListTargetLang);
+            phraseMapSourceLang.put(ct, phraseListSourceLang);
+            phraseMapTargetLang.put(ct, phraseListTargetLang);
 
         }
 
