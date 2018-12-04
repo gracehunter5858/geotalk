@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -49,7 +50,7 @@ public class ContextFragment extends Fragment {
     private LocationRequest locationRequest;
     String currentLocationCategory = null;
     private GoogleApiClient mGoogleApiClient;
-
+    private View currView;
     private SavedPhraseDAO savedPhraseDAO;
 
     String sourceLanguage;
@@ -117,8 +118,11 @@ public class ContextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_context, container, false);
+        currView = view;
 
-        return inflater.inflate(R.layout.fragment_context, container, false);
+        return view;
     }
 
     public void onCatClick(int position){
@@ -149,9 +153,14 @@ public class ContextFragment extends Fragment {
     void updateUI(String category, Map<String, List<String>> phraseMapSourceLang, Map<String, List<String>> phraseMapTargetLang) {
 
         currentLocationCategory = category;
+        TextView currLocation = (TextView) currView.findViewById(R.id.currLoc);
+        if(currentLocationCategory != null){
+            currLocation.setText(currentLocationCategory);
+        }else{
+            currLocation.setText("Unknown");
+        }
         List<String> targetPhrases = new ArrayList<>();
         List<String> sourcePhrases = new ArrayList<>();
-
         List<String> categories = new ArrayList(phraseMapSourceLang.keySet());
         for (int i = 0; i < categories.size(); i++) {
             if (!phraseMapSourceLang.isEmpty()) {
