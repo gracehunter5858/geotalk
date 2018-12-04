@@ -38,8 +38,8 @@ public class GeneralFragment extends Fragment {
     private ContextFragment contextFrag;
     private HashMap<String, String> phraseToCat;
 
-    private String sourceLanguage;
-    private String targetLanguage;
+    private String sourceLanguage = "English";
+    private String targetLanguage = "Korean";
 
     public GeneralFragment() {
         // Required empty public constructor
@@ -70,9 +70,9 @@ public class GeneralFragment extends Fragment {
         this.phraseByCategoryDAO = db.getPhraseByCategoryDAO();
         this.translationDAO = db.getTranslationDAO();
 
-        UserDAO userDAO = AppDatabase.getInstance(getContext()).getUserDao();
+        /*UserDAO userDAO = AppDatabase.getInstance(getContext()).getUserDao();
         sourceLanguage = userDAO.getUserByID(1).sourceLanguage;
-        targetLanguage = userDAO.getUserByID(1).targetLanguage;
+        targetLanguage = userDAO.getUserByID(1).targetLanguage;*/
 
         //addDatabaseContent();
         if (getArguments() != null) {

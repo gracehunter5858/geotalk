@@ -52,8 +52,8 @@ public class ContextFragment extends Fragment {
 
     private SavedPhraseDAO savedPhraseDAO;
 
-    String sourceLanguage;
-    String targetLanguage;
+    String sourceLanguage = "English";
+    String targetLanguage = "Korean";
 
     PhrasesRecyclerAdapter phraseAdapter;
     CategoryRecyclerAdapter catoegoryAdapter;
@@ -79,9 +79,9 @@ public class ContextFragment extends Fragment {
         super.onCreate(savedInstanceState);
         System.out.println("Context fragment created");
 
-        UserDAO userDAO = AppDatabase.getInstance(getContext()).getUserDao();
+        /*UserDAO userDAO = AppDatabase.getInstance(getContext()).getUserDao();
         sourceLanguage = userDAO.getUserByID(1).sourceLanguage;
-        targetLanguage = userDAO.getUserByID(1).targetLanguage;
+        targetLanguage = userDAO.getUserByID(1).targetLanguage;*/
 
         locationProcessor = new LocationProcessor(this);
         AppDatabase db = AppDatabase.getInstance(this.getContext());
