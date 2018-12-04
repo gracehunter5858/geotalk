@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,7 @@ public class ContextFragment extends Fragment {
     RecyclerView phraseRecyclerView;
     RecyclerView categoryRecyclerView;
 
+    private HashMap<String, String> phraseToCat;
 
 
     public ContextFragment() {
@@ -75,6 +77,8 @@ public class ContextFragment extends Fragment {
         sourceLanguage = "English";
         targetLanguage = "Spanish";
         locationProcessor = new LocationProcessor(this);
+
+        phraseToCat = new HashMap<>();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         if (ActivityCompat.checkSelfPermission(getActivity(),
@@ -132,33 +136,44 @@ public class ContextFragment extends Fragment {
         }
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
     }
+
     void updateUI(String category, Map<String, List<String>> phraseMapSourceLang, Map<String, List<String>> phraseMapTargetLang) {
 
         currentLocationCategory = category;
+        List<String> targetPhrases = new ArrayList<>();
+        List<String> sourcePhrases = new ArrayList<>();
 
         List<String> categories = new ArrayList(phraseMapSourceLang.keySet());
-        List<String> targetPhrases = phraseMapTargetLang.get(categories.get(0));
-        List<String> sourcePhrases = phraseMapSourceLang.get(categories.get(0));
+        for (int i = 0; i < categories.size(); i++) {
+            if (!phraseMapSourceLang.isEmpty()) {
+                for (String phrase : phraseMapSourceLang.get(categories.get(i))) {
+                    phraseToCat.put(phrase, categories.get(i));
+                }
+                targetPhrases.addAll(phraseMapTargetLang.get(categories.get(i)));
+                sourcePhrases.addAll(phraseMapSourceLang.get(categories.get(i)));
+            }
+        }
 
         // Initialize Recyclerviews
-        initCategoryRecyclerView(categories,getView());
-        initPhraseRecyclerView(sourcePhrases, targetPhrases,getView());
+        initCategoryRecyclerView(categories, getView(), initPhraseRecyclerView(sourcePhrases, targetPhrases, getView(), phraseToCat));
+
     }
     /**
      *
      * So according to stackoverflow, I should be able to get away with using this??
      *
      * **/
-    private void initPhraseRecyclerView(List<String> sourcePhrases, List<String> targetPhrases, View view){
+    private PhrasesRecyclerAdapter initPhraseRecyclerView(List<String> sourcePhrases, List<String> targetPhrases, View view, HashMap<String, String> phraseToCat){
         RecyclerView recyclerView = view.findViewById(R.id.RECYCLERVIEW_PHRASES);
-        PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(sourcePhrases, targetPhrases, getActivity());
+        PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(sourcePhrases, targetPhrases, getActivity(), phraseToCat);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        return adapter;
     }
 
-    private void initCategoryRecyclerView(List<String> categories, View view){
+    private void initCategoryRecyclerView(List<String> categories, View view, PhrasesRecyclerAdapter phraseAdapter){
         RecyclerView recyclerView = view.findViewById(R.id.RECYCLERVIEW_CATEGORY);
-        CategoryRecyclerAdapter adapter = new CategoryRecyclerAdapter(categories,getActivity());
+        CategoryRecyclerAdapter adapter = new CategoryRecyclerAdapter(categories, getActivity(), phraseAdapter);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager= new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);

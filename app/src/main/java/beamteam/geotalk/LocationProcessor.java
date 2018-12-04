@@ -56,12 +56,19 @@ public class LocationProcessor {
 
     // DEBUG
     private void addDatabaseContent() {
-
+        System.out.println("Adding food phrases");
         categoryDAO.insert(new Category("restaurant", "food"));
         int catID = categoryDAO.getCatID("restaurant", "food");
         translationDAO.insert(new Translation(1, "English", "muffin"));
         translationDAO.insert(new Translation(1, "Spanish", "mollete"));
         phraseByCategoryDAO.insert(new PhraseByCategory(catID, 1));
+
+        System.out.println("Adding drink phrases");
+        categoryDAO.insert(new Category("restaurant", "drink"));
+        catID = categoryDAO.getCatID("restaurant", "drink");
+        translationDAO.insert(new Translation(2, "English", "water"));
+        translationDAO.insert(new Translation(2, "Spanish", "agua"));
+        phraseByCategoryDAO.insert(new PhraseByCategory(catID, 2));
     }
 
     void getUpdatedPhrases(double lat, double lon) {
@@ -100,13 +107,11 @@ public class LocationProcessor {
 
     private void setPhrasesForCategory(String category) {
         if (!category.equals(contextFrag.currentLocationCategory)) {
-//            Map<String, List<String>> phraseMapSourceLang = new HashMap<>();
-//            Map<String, List<String>> phraseMapTargetLang = new HashMap<>();
             phraseMapSourceLang = new HashMap<>();
             phraseMapTargetLang = new HashMap<>();
 
             for (String subcategory : LocationCategorizer.getSubcategories(category)) {
-
+                System.out.println("Subcategory:" + subcategory);
                 List<String> phraseListSourceLang = new ArrayList<>();
                 List<String> phraseListTargetLang = new ArrayList<>();
                 int catID = categoryDAO.getCatID(category, subcategory);
@@ -120,8 +125,9 @@ public class LocationProcessor {
 
                 phraseMapSourceLang.put(subcategory, phraseListSourceLang);
                 phraseMapTargetLang.put(subcategory, phraseListTargetLang);
+                System.out.println("Subcat and source langs" + phraseMapSourceLang);
+                System.out.println("Subcat and target langs" + phraseMapTargetLang);
             }
-//            contextFrag.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
         }
         contextFrag.updateUI(category, phraseMapSourceLang, phraseMapTargetLang);
     }
