@@ -72,7 +72,7 @@ public class SavedFragment extends Fragment {
                 String target = targetPhrases.get(position);
                 int phraseID = savedPhraseDAO.getPhraseID(source);
 
-                savedPhraseDAO.delete(new SavedPhrase(1, phraseID, 1, savedPhrases.get(position), targetPhrases.get(position)));
+                savedPhraseDAO.delete(new SavedPhrase(1, phraseID, 1, source, target));
                 savedPhrases.remove(position);
                 targetPhrases.remove(position);
                 adapter.notifyDataSetChanged();
