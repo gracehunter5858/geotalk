@@ -19,4 +19,7 @@ public class User {
         this.targetLanguage = targetLanguage;
     }
 
+    public static User getTestUser() {
+        return new User(1, "English", "Korean");
+    }
 }

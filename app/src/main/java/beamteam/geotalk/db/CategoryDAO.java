@@ -22,7 +22,7 @@ public interface CategoryDAO {
     List<CategoryTuple> getCategories();
 
     @Insert
-    void insert(Category category);
+    void insertAll(Category... categories);
 
     @Delete
     void delete(Category category);

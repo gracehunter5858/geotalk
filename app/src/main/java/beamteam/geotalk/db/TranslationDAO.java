@@ -15,7 +15,7 @@ public interface TranslationDAO {
     String getTranslation(int phraseID, String language);
 
     @Insert
-    void insert(Translation translation);
+    void insertAll(Translation... translation);
 
     @Delete
     void delete(Translation translation);
