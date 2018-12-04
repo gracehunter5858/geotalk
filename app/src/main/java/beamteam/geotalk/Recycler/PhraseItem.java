@@ -1,4 +1,4 @@
-package beamteam.geotalk;
+package beamteam.geotalk.Recycler;
 
 public class PhraseItem {
     private String phraseText;
