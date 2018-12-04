@@ -20,9 +20,19 @@ public class Translation {
 
     public static Translation[] getInitialData() {
         return new Translation[] {
-
+                // Airport Korean
                 new Translation(0, "Korean", "탑승권"),
-                new Translation(0, "English", "baggage claim"), // baggage claim
+                new Translation(70, "Korean", "티켓"),
+                new Translation(71,"Korean","터미널"),
+                new Translation(72,"Korean", "출국"),
+                new Translation(73,"Korean", "입국"),
+                // Airport English
+                new Translation(0, "English", "baggage claim"),
+                new Translation(70, "English", "ticket"),
+                new Translation(71,"English","terminal"),
+                new Translation(72,"English", "departure"),
+                new Translation(73,"English", "arrival"),
+
 
                 // General Korean
                 new Translation(1, "Korean", "네"),
@@ -180,6 +190,7 @@ public class Translation {
                 new Translation(67, "English", "I do not eat __ "),
                 new Translation(68, "English", "I have this allergy"),
                 new Translation(69, "English", "Does this have __ in it?"),
+
         };
     }
 

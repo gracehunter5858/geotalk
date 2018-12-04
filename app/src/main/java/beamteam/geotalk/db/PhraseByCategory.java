@@ -22,7 +22,10 @@ public class PhraseByCategory {
     public static PhraseByCategory[] getInitialData() {
         return new PhraseByCategory[] {
                 new PhraseByCategory(0, 0), // airport/baggage baggage claim
-
+                new PhraseByCategory(4, 70),
+                new PhraseByCategory(4, 71),
+                new PhraseByCategory(4, 72),
+                new PhraseByCategory(4, 73),
                 // Basics
                 new PhraseByCategory(6, 1),
                 new PhraseByCategory(6, 2),

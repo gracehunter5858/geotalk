@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".ProfileFragment">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/pictureconstraint"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/languageconstraint"
@@ -19,18 +19,18 @@
 
         <ImageView
             android:id="@+id/photo"
-            android:layout_width="148dp"
-            android:layout_height="160dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="85dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="85dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name"
-            app:layout_constraintVertical_bias="0.0"
-            tools:src="@drawable/dennyminprofile" />
+            app:layout_constraintVertical_bias="0.49"
+            app:srcCompat="@drawable/dennyminprofile" />
 
         <TextView
             android:id="@+id/name"
@@ -64,68 +64,64 @@
             android:id="@+id/sourcelanghead"
             android:layout_width="219dp"
             android:layout_height="31dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="60dp"
-            android:layout_marginRight="60dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/Source_Lang_Header"
             android:textColor="@android:color/black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/sourcelangs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/targetlanghead"
             android:layout_width="wrap_content"
-            android:layout_height="27dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="13dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/Target_Lang_Header"
             android:textColor="@android:color/black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/targetlangblurb"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.144"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.567" />
+            app:layout_constraintTop_toBottomOf="@+id/sourcelangs" />
 
         <TextView
             android:id="@+id/targetlangblurb"
             android:layout_width="wrap_content"
             android:layout_height="27dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/Target_Lang_Blurb"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/targetlangs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/targetlanghead"
-            app:layout_constraintTop_toBottomOf="@+id/targetlanghead"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/targetlanghead" />
 
         <Spinner
             android:id="@+id/sourcelangs"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:entries="@array/fromlanguagesProfile"
             app:layout_constraintBottom_toTopOf="@+id/targetlanghead"
-            app:layout_constraintStart_toStartOf="@+id/sourcelanghead"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sourcelanghead"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -133,11 +129,15 @@
             android:id="@+id/targetlangs"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:entries="@array/tolanguagesProfile"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/targetlangblurb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/targetlangblurb"
             app:layout_constraintVertical_bias="0.0" />
 

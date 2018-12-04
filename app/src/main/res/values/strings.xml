@@ -42,11 +42,11 @@
         <item>Russian</item>
     </string-array>
     <string-array name="tolanguages">
+        <item>Korean</item>
         <item>Spanish</item>
         <item>Japanese</item>
         <item>Vietnamese</item>
         <item>Chinese</item>
-        <item>Korean</item>
         <item>French</item>
         <item>Italian</item>
         <item>Russian</item>
