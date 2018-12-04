@@ -46,17 +46,16 @@ public class LocationProcessor {
 
     public LocationProcessor(ContextFragment contextFrag) {
         this.contextFrag = contextFrag;
-        categoryDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getCategoryDAO();
+        /*categoryDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getCategoryDAO();
         phraseByCategoryDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getPhraseByCategoryDAO();
         translationDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getTranslationDAO();
 
-        // DEBUG
-        addDatabaseContent();
+        addDatabaseContent();*/
     }
 
     // DEBUG
     private void addDatabaseContent() {
-        System.out.println("Adding food phrases");
+        /*System.out.println("Adding food phrases");
         categoryDAO.insert(new Category("restaurant", "food"));
         int catID = categoryDAO.getCatID("restaurant", "food");
         translationDAO.insert(new Translation(1, "English", "muffin"));
@@ -68,7 +67,7 @@ public class LocationProcessor {
         catID = categoryDAO.getCatID("restaurant", "drink");
         translationDAO.insert(new Translation(2, "English", "water"));
         translationDAO.insert(new Translation(2, "Spanish", "agua"));
-        phraseByCategoryDAO.insert(new PhraseByCategory(catID, 2));
+        phraseByCategoryDAO.insert(new PhraseByCategory(catID, 2));*/
     }
 
     void getUpdatedPhrases(double lat, double lon) {

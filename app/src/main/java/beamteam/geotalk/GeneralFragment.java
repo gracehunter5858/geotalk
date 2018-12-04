@@ -39,7 +39,7 @@ public class GeneralFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.savedPhraseDAO = AppDatabase.getInMemoryDatabase(this.getContext()).getSavedPhraseDAO();
+        this.savedPhraseDAO = AppDatabase.getInstance(this.getContext()).getSavedPhraseDAO();
         if (getArguments() != null) {
 
         }

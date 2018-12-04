@@ -41,7 +41,7 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         this.sourcePhrases = sourcePhrases;
         this.targetPhrases = targetPhrases;
         this.mContext = mContext;
-        this.savedPhraseDAO = AppDatabase.getInMemoryDatabase(mContext).getSavedPhraseDAO();
+        this.savedPhraseDAO = AppDatabase.getInstance(mContext).getSavedPhraseDAO();
 
         this.phraseToCat = phraseToCat;
 

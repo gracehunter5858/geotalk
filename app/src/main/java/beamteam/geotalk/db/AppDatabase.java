@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Category.class, PhraseByCategory.class, SavedPhrase.class, Translation.class, User.class}, version = 1)
+@Database(entities = {Category.class, PhraseByCategory.class, SavedPhrase.class, Translation.class, User.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -18,10 +18,15 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PhraseByCategoryDAO getPhraseByCategoryDAO();
     public abstract TranslationDAO getTranslationDAO();
     public abstract UserDAO getUserDao();
+    public abstract SavedPhraseDAO getSavedPhraseDAO();
 
     public synchronized static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = buildDatabase(context);
+            // DEBUG
+            /*INSTANCE = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
+                    .allowMainThreadQueries()
+                    .build();*/
         }
         return INSTANCE;
     }
@@ -46,6 +51,7 @@ public abstract class AppDatabase extends RoomDatabase {
                         }
                     })
                     .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
                     .build();
     }
 

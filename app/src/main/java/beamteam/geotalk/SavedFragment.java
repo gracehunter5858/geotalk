@@ -44,7 +44,7 @@ public class SavedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        savedPhraseDAO = AppDatabase.getInMemoryDatabase(this.getContext()).getSavedPhraseDAO();
+        savedPhraseDAO = AppDatabase.getInstance(this.getContext()).getSavedPhraseDAO();
         List<PhraseTuple> phrases = savedPhraseDAO.getSavedPhrases(1, 1);
 
         View view = inflater.inflate(R.layout.fragment_saved, container, false);

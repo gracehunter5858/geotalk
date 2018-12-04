@@ -12,7 +12,7 @@ import android.arch.persistence.room.Update;
 public interface UserDAO {
 
     @Query("SELECT * FROM users WHERE id=:id")
-    void getUserByID(int id);
+    User getUserByID(int id);
 
     @Insert
     void insert(User user);
