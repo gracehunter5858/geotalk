@@ -68,7 +68,7 @@ public class GeneralFragment extends Fragment {
         this.categoryDAO = db.getCategoryDAO();
         this.phraseByCategoryDAO = db.getPhraseByCategoryDAO();
         this.translationDAO = db.getTranslationDAO();
-        addDatabaseContent();
+        //addDatabaseContent();
         if (getArguments() != null) {
 
         }
