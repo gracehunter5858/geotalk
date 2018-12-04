@@ -8,7 +8,7 @@ import java.util.Map;
 public class LocationCategorizer {
 
     private static final Map<String, String> typeToCategoryMap = initCatMap();
-    private static final Map<String, String[]> categoryToSubcategoriesMap = initSubcatMap();
+    //private static final Map<String, String[]> categoryToSubcategoriesMap = initSubcatMap();
 
     private static Map<String, String> initCatMap() {
         Map<String,String> map = new HashMap<>();
@@ -59,7 +59,7 @@ public class LocationCategorizer {
         return map;
     }
 
-    private static Map<String, String[]> initSubcatMap() {
+    /*private static Map<String, String[]> initSubcatMap() {
         Map<String, String[]> map = new HashMap<>();
         map.put("entertainment", new String[] {"all"});
         map.put("bank", new String[] {"all"});
@@ -72,7 +72,7 @@ public class LocationCategorizer {
         map.put("hotel", new String[] {"all"});
         map.put("school", new String[] {"all"});
         return map;
-    }
+    }*/
 
     static boolean supportsType(String type) {
         return typeToCategoryMap.containsKey(type);
@@ -82,8 +82,8 @@ public class LocationCategorizer {
         return typeToCategoryMap.get(type);
     }
 
-    static String[] getSubcategories(String category) {
+    /*static String[] getSubcategories(String category) {
         return categoryToSubcategoriesMap.get(category);
-    }
+    }*/
 
 }

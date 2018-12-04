@@ -9,8 +9,6 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import beamteam.geotalk.CategoryTuple;
-
 
 @Dao
 public interface CategoryDAO {
