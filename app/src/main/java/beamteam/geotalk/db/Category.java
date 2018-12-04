@@ -25,22 +25,22 @@ public class Category {
     public static Category[] getInitialData() {
         return new Category[] {
                 // Locations
-                new Category(1, "airport", "Baggage"),
-                new Category(2, "airport", "On the Plane"),
-                new Category(3, "airport", "Customs"),
-                new Category(4, "airport", "Transportation"),
-                new Category(5, "airport", "Getting to the Plane"),
-                new Category(6, "airport", "Problems"),
+                new Category(0, "airport", "Baggage"),
+                new Category(1, "airport", "On the Plane"),
+                new Category(2, "airport", "Customs"),
+                new Category(3, "airport", "Transportation"),
+                new Category(4, "airport", "Getting to the Plane"),
+                new Category(5, "airport", "Problems"),
 
                 // General
-                new Category(7, "general", "Basics"),
-                new Category(8, "general", "Numbers"),
-                new Category(9, "general", "Dates & Times"),
-                new Category(10, "general", "Directions"),
-                new Category(11, "general", "Food"),
-                new Category(12, "general", "Money"),
-                new Category(13, "general", "Problems"),
-                new Category(14, "general", "Questions"),
+                new Category(6, "general", "Basics"),
+                new Category(7, "general", "Numbers"),
+                new Category(8, "general", "Dates & Times"),
+                new Category(9, "general", "Directions"),
+                new Category(10, "general", "Transportation"),
+                new Category(11, "general", "Money"),
+                new Category(12, "general", "Problems"),
+                new Category(13, "general", "Food"),
         };
     }
 
