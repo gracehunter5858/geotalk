@@ -17,7 +17,7 @@ public interface CategoryDAO {
     Integer getCatID(String catName, String subCatName);
 
     @Insert
-    void insert(Category category);
+    void insertAll(Category... categories);
 
     @Delete
     void delete(Category category);

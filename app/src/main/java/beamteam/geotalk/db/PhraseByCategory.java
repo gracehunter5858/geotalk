@@ -19,4 +19,10 @@ public class PhraseByCategory {
         this.phraseID = phraseID;
     }
 
+    public static PhraseByCategory[] getInitialData() {
+        return new PhraseByCategory[] {
+                new PhraseByCategory(0, 0), // airport/baggage, "baggage claim"
+        };
+}
+
 }

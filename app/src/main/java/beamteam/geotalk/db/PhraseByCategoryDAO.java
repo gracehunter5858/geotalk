@@ -15,7 +15,7 @@ public interface PhraseByCategoryDAO {
     List<Integer> getPhraseIDsForCatID(int catID);
 
     @Insert
-    void insert(PhraseByCategory phraseByCategory);
+    void insertAll(PhraseByCategory... phraseByCategory);
 
     @Delete
     void delete(PhraseByCategory phraseByCategory);

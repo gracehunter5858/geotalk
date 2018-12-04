@@ -18,4 +18,10 @@ public class Translation {
         this.language = language;
     }
 
+    public static Translation[] getInitialData() {
+        return new Translation[] {
+                new Translation(0, "English", "baggage claim"), // baggage claim
+        };
+    }
+
 }
