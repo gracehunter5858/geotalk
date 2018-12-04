@@ -1,6 +1,7 @@
 
 package beamteam.geotalk.db;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -9,12 +10,17 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import beamteam.geotalk.PhraseTuple;
+
 
 @Dao
 public interface SavedPhraseDAO {
 
-    @Query("SELECT phraseID FROM saved_phrases WHERE userID=:userID AND language=:targetLanguage")
-    List<Integer> getSavedPhraseIDs(int userID, int targetLanguage);
+    @Query("SELECT source, target FROM saved_phrases WHERE userID=:userID AND language=:targetLanguage")
+    List<PhraseTuple> getSavedPhrases(int userID, int targetLanguage);
+
+    @Query("SELECT source FROM saved_phrases WHERE userID=:userID AND language=:targetLanguage")
+    List<String> getSourcePhrases(int userID, int targetLanguage);
 
     @Insert
     void insert(SavedPhrase savedPhrase);
