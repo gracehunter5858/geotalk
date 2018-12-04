@@ -9,12 +9,17 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import beamteam.geotalk.CategoryTuple;
+
 
 @Dao
 public interface CategoryDAO {
 
     @Query("SELECT id FROM categories WHERE catName=:catName AND subCatName=:subCatName")
     Integer getCatID(String catName, String subCatName);
+
+    @Query("SELECT catName, subCatName FROM categories")
+    List<CategoryTuple> getCategories();
 
     @Insert
     void insert(Category category);

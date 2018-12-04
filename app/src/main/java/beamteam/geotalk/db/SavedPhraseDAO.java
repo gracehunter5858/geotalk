@@ -22,6 +22,9 @@ public interface SavedPhraseDAO {
     @Query("SELECT source FROM saved_phrases WHERE userID=:userID AND language=:targetLanguage")
     List<String> getSourcePhrases(int userID, int targetLanguage);
 
+    @Query("SELECT phraseID FROM saved_phrases WHERE source=:source")
+    int getPhraseID(String source);
+
     @Insert
     void insert(SavedPhrase savedPhrase);
 

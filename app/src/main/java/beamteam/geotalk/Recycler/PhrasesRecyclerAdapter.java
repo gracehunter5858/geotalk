@@ -75,13 +75,14 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 String source = sourcePhrases.get(position);
                 String target = targetPhrases.get(position);
+                int phraseID = savedPhraseDAO.getPhraseID(source);
                 if (checked) {
                     if (!isDuplicate(source)) {
-                        savedPhraseDAO.insert(new SavedPhrase(1, 1, 1, source, target));
+                        savedPhraseDAO.insert(new SavedPhrase(1, phraseID, 1, source, target));
                     }
 
                 } else {
-                    savedPhraseDAO.delete(new SavedPhrase(1, 1, 1, source, target));
+                    savedPhraseDAO.delete(new SavedPhrase(1, phraseID, 1, source, target));
                 }
             }
         });
