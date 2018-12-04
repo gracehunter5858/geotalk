@@ -33,14 +33,14 @@ public class Category {
                 new Category(6, "airport", "Problems"),
 
                 // General
-                new Category(0, "general", "Basics"),
-                new Category( 1, "general", "Numbers"),
-                new Category(3, "general", "Dates & Times"),
-                new Category(4, "general", "Directions"),
-                new Category(5, "general", "Food"),
-                new Category(6, "general", "Money"),
-                new Category(6, "general", "Problems"),
-                new Category(6, "general", "Questions"),
+                new Category(7, "general", "Basics"),
+                new Category( 8, "general", "Numbers"),
+                new Category(9, "general", "Dates & Times"),
+                new Category(10, "general", "Directions"),
+                new Category(11, "general", "Food"),
+                new Category(12, "general", "Money"),
+                new Category(13, "general", "Problems"),
+                new Category(14, "general", "Questions"),
         };
     }
 
