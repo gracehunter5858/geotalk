@@ -75,7 +75,7 @@ public class ContextFragment extends Fragment {
         System.out.println("Context fragment created");
         // Placeholder
         sourceLanguage = "English";
-        targetLanguage = "Spanish";
+        targetLanguage = "Korean";
         locationProcessor = new LocationProcessor(this);
 
         phraseToCat = new HashMap<>();

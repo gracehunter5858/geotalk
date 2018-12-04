@@ -20,7 +20,9 @@ public class Translation {
 
     public static Translation[] getInitialData() {
         return new Translation[] {
-                new Translation(0, "English", "baggage claim"), // baggage claim
+                new Translation(0, "Korean", "탑승권"),
+                new Translation(0, "English", "baggage claim")// baggage claim
+
         };
     }
 

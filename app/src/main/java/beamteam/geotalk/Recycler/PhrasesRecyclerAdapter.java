@@ -2,10 +2,13 @@
 package beamteam.geotalk.Recycler;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +38,7 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     private HashMap<String, String> delSourcetoTarget;
     private HashMap<String, Integer> phraseToPosition;
     private HashSet<String> filteredCats;
+
 
 
     public PhrasesRecyclerAdapter(List<String> sourcePhrases, List<String> targetPhrases, Context mContext, HashMap<String, String> phraseToCat) {
@@ -70,18 +74,32 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         final int position = i;
         viewHolder.source_phrase_textview.setText(sourcePhrases.get(i));
         viewHolder.target_phrase_textview.setText(targetPhrases.get(i));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+        final CheckBox chkSelected = (CheckBox) viewHolder.chkSelected;
+
+        final SharedPreferences.Editor editor = preferences.edit();
+        if(preferences.contains("checked") && preferences.getBoolean("checked",false) == true) {
+            chkSelected.setChecked(true);
+        } else {
+            chkSelected.setChecked(false);
+        }
         viewHolder.chkSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 String source = sourcePhrases.get(position);
                 String target = targetPhrases.get(position);
                 int phraseID = savedPhraseDAO.getPhraseID(source);
-                if (checked) {
+                if (chkSelected.isChecked()) {
                     if (!isDuplicate(source)) {
+                        editor.putBoolean("checked", true);
+                        editor.commit();
                         savedPhraseDAO.insert(new SavedPhrase(1, phraseID, 1, source, target));
                     }
 
                 } else {
+                    editor.putBoolean("checked", false);
+                    editor.commit();
                     savedPhraseDAO.delete(new SavedPhrase(1, phraseID, 1, source, target));
                 }
             }
@@ -93,6 +111,8 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         }
         });*/
     }
+
+
 
     //Called when new new list created via filters
     public void newPhraseList(List<String> newSourceList, List<String> newTargetList){
@@ -155,16 +175,29 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         return delSourcetoTarget.size() > 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView source_phrase_textview;
         TextView target_phrase_textview;
         CheckBox chkSelected;
+        private SparseBooleanArray itemStateArray= new SparseBooleanArray();
         ConstraintLayout phrase_layout;
         public ViewHolder(View itemView){
             super(itemView);
             source_phrase_textview = itemView.findViewById(R.id.SOURCE_LANG_PHRASE);
             target_phrase_textview = itemView.findViewById(R.id.TARGET_LANG_PHRASE);
             chkSelected = itemView.findViewById(R.id.chkSelected);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+            if (!itemStateArray.get(adapterPosition, false)) {
+                chkSelected.setChecked(true);
+                itemStateArray.put(adapterPosition, true);
+            } else {
+                chkSelected.setChecked(true);
+                itemStateArray.put(adapterPosition, false);
+            }
         }
     }
 }
