@@ -26,6 +26,8 @@ import java.util.Map;
 
 import beamteam.geotalk.Recycler.CategoryRecyclerAdapter;
 import beamteam.geotalk.Recycler.PhrasesRecyclerAdapter;
+import beamteam.geotalk.db.AppDatabase;
+import beamteam.geotalk.db.UserDAO;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -73,9 +75,11 @@ public class ContextFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("Context fragment created");
-        // Placeholder
-        sourceLanguage = "English";
-        targetLanguage = "Korean";
+
+        UserDAO userDAO = AppDatabase.getInstance(getContext()).getUserDao();
+        sourceLanguage = userDAO.getUserByID(1).sourceLanguage;
+        targetLanguage = userDAO.getUserByID(1).targetLanguage;
+
         locationProcessor = new LocationProcessor(this);
 
         phraseToCat = new HashMap<>();

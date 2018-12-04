@@ -4,13 +4,13 @@
     <string name="TEXT_PHRASE_ITEM_SOURCE">Sample phrase in source language</string>
     <string name="TEXT_PHRASE_ITEM_TARGET">Sample phrase in target language</string>
     <string name="TEXT_CATEGORY">Category</string>
-    <string name="TITLE_FILTER">FILTER</string>
-    <string name="TITLE_PHRASES">EXPRESSIONS</string>
-    <string name="TEXT_CATEGORIES">CATEGORIES</string>
+    <string name="TITLE_FILTER">Filter</string>
+    <string name="TITLE_PHRASES">Expressions</string>
+    <string name="TEXT_CATEGORIES">Categories</string>
     <string name="TITLE_GENERAL">General</string>
     <string name="TITLE_Context">Context</string>
     <string name="TITLE_SAVED">Saved</string>
-    <string name="title_activity_bottom_nav">BottomNav</string>
+    <string name="title_activity_bottom_nav">GeoTalk</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -24,9 +24,9 @@
         <item>Most Recent</item>
         <item>Most Popular</item>
     </string-array>
-    <string name="TITLE_CATEGORIES">CATEGORIES</string>
+    <string name="TITLE_CATEGORIES">Categories</string>
     <string name="title_activity_profile">ProfileActivity</string>
-    <string name="PhotoName">Placeholder Name</string>
+    <string name="PhotoName">Denny Min</string>
     <string name="Source_Lang_Header">I speak and understand</string>
     <string name="Target_Lang_Header">Target language</string>
     <string name="Target_Lang_Blurb">automatically assign a language to translate to</string>
@@ -51,6 +51,12 @@
         <item>Italian</item>
         <item>Russian</item>
         <item>English</item>
+    </string-array>
+    <string-array name="fromlanguagesProfile">
+        <item>English</item>
+    </string-array>
+    <string-array name="tolanguagesProfile">
+        <item>Korean</item>
     </string-array>
     <string name="title_activity_translate">Translate</string>
 </resources>

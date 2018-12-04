@@ -84,6 +84,7 @@ public class LocationProcessor {
                 String type = extractLocationType(response);
                 if (type != null) {
                     String category = typeToCategory(type);
+                    category = "airport";
                     if (category != null) {
                         System.out.println(category);
                         setPhrasesForCategory(category);
@@ -110,7 +111,7 @@ public class LocationProcessor {
             phraseMapSourceLang = new HashMap<>();
             phraseMapTargetLang = new HashMap<>();
 
-            for (String subcategory : LocationCategorizer.getSubcategories(category)) {
+            for (String subcategory : categoryDAO.getSubcategories(category)) {
                 System.out.println("Subcategory:" + subcategory);
                 List<String> phraseListSourceLang = new ArrayList<>();
                 List<String> phraseListTargetLang = new ArrayList<>();
