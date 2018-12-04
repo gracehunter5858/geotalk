@@ -28,6 +28,7 @@ import beamteam.geotalk.db.SavedPhrase;
 import beamteam.geotalk.db.SavedPhraseDAO;
 import beamteam.geotalk.db.Translation;
 import beamteam.geotalk.db.TranslationDAO;
+import beamteam.geotalk.db.UserDAO;
 
 public class GeneralFragment extends Fragment {
     private SavedPhraseDAO savedPhraseDAO;
@@ -37,8 +38,8 @@ public class GeneralFragment extends Fragment {
     private ContextFragment contextFrag;
     private HashMap<String, String> phraseToCat;
 
-    private String sourceLanguage = "English";
-    private String targetLanguage = "Korean";
+    private String sourceLanguage;
+    private String targetLanguage;
 
     public GeneralFragment() {
         // Required empty public constructor
@@ -68,6 +69,11 @@ public class GeneralFragment extends Fragment {
         this.categoryDAO = db.getCategoryDAO();
         this.phraseByCategoryDAO = db.getPhraseByCategoryDAO();
         this.translationDAO = db.getTranslationDAO();
+
+        UserDAO userDAO = AppDatabase.getInstance(getContext()).getUserDao();
+        sourceLanguage = userDAO.getUserByID(1).sourceLanguage;
+        targetLanguage = userDAO.getUserByID(1).targetLanguage;
+
         //addDatabaseContent();
         if (getArguments() != null) {
 
