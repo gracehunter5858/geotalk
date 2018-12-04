@@ -26,6 +26,8 @@ import java.util.Map;
 
 import beamteam.geotalk.Recycler.CategoryRecyclerAdapter;
 import beamteam.geotalk.Recycler.PhrasesRecyclerAdapter;
+import beamteam.geotalk.db.AppDatabase;
+import beamteam.geotalk.db.SavedPhraseDAO;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -46,6 +48,8 @@ public class ContextFragment extends Fragment {
     private LocationRequest locationRequest;
     String currentLocationCategory = null;
     private GoogleApiClient mGoogleApiClient;
+
+    private SavedPhraseDAO savedPhraseDAO;
 
     String sourceLanguage;
     String targetLanguage;
@@ -77,6 +81,8 @@ public class ContextFragment extends Fragment {
         sourceLanguage = "English";
         targetLanguage = "Korean";
         locationProcessor = new LocationProcessor(this);
+        AppDatabase db = AppDatabase.getInstance(this.getContext());
+        this.savedPhraseDAO = db.getSavedPhraseDAO();
 
         phraseToCat = new HashMap<>();
 
@@ -154,8 +160,10 @@ public class ContextFragment extends Fragment {
             }
         }
 
+        List<String> savedPhrases = savedPhraseDAO.getSourcePhrases(1, 1);
+
         // Initialize Recyclerviews
-        initCategoryRecyclerView(categories, getView(), initPhraseRecyclerView(sourcePhrases, targetPhrases, getView(), phraseToCat));
+        initCategoryRecyclerView(categories, getView(), initPhraseRecyclerView(sourcePhrases, targetPhrases, savedPhrases, getView(), phraseToCat));
 
     }
     /**
@@ -163,9 +171,9 @@ public class ContextFragment extends Fragment {
      * So according to stackoverflow, I should be able to get away with using this??
      *
      * **/
-    private PhrasesRecyclerAdapter initPhraseRecyclerView(List<String> sourcePhrases, List<String> targetPhrases, View view, HashMap<String, String> phraseToCat){
+    private PhrasesRecyclerAdapter initPhraseRecyclerView(List<String> sourcePhrases, List<String> targetPhrases, List<String> savedPhrases, View view, HashMap<String, String> phraseToCat){
         RecyclerView recyclerView = view.findViewById(R.id.RECYCLERVIEW_PHRASES);
-        PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(sourcePhrases, targetPhrases, getActivity(), phraseToCat);
+        PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(sourcePhrases, targetPhrases, savedPhrases, getActivity(), phraseToCat);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return adapter;

@@ -100,6 +100,9 @@ public class GeneralFragment extends Fragment {
             phraseMapTargetLang.put(ct.subcat, phraseListTargetLang);
 
         }
+
+        List<String> savedPhrases = savedPhraseDAO.getSourcePhrases(1, 1);
+
         /*
         savedPhraseDAO.getPhraseIDs();
 
@@ -161,7 +164,7 @@ public class GeneralFragment extends Fragment {
             }
         }
 
-        initCategoryRecyclerView(categoryNames, view, initPhraseRecyclerView(sourcePhrases, targetPhrases, view, phraseToCat));
+        initCategoryRecyclerView(categoryNames, view, initPhraseRecyclerView(sourcePhrases, targetPhrases, savedPhrases, view, phraseToCat));
         return view;
     }
 
@@ -170,9 +173,9 @@ public class GeneralFragment extends Fragment {
         return phrases.contains(phrase);
     }
 
-    private PhrasesRecyclerAdapter initPhraseRecyclerView(List<String> sourcePhrases, List<String> targetPhrases, View view, HashMap<String, String> phraseToCat){
+    private PhrasesRecyclerAdapter initPhraseRecyclerView(List<String> sourcePhrases, List<String> targetPhrases, List<String> savedPhrases, View view, HashMap<String, String> phraseToCat){
         RecyclerView recyclerView = view.findViewById(R.id.RECYCLERVIEW_PHRASES);
-        PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(sourcePhrases, targetPhrases, getActivity(), phraseToCat);
+        PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(sourcePhrases, targetPhrases, savedPhrases, getActivity(), phraseToCat);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return adapter;

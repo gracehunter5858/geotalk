@@ -31,6 +31,7 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     private static final String TAG = "PhrRecAdapt";
     private List<String> sourcePhrases;
     private List<String> targetPhrases;
+    private List<String> savedPhrases;
     private Context mContext;
     private SavedPhraseDAO savedPhraseDAO;
     private String category;
@@ -38,12 +39,14 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     private HashMap<String, String> delSourcetoTarget;
     private HashMap<String, Integer> phraseToPosition;
     private HashSet<String> filteredCats;
+    final SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
 
-
-    public PhrasesRecyclerAdapter(List<String> sourcePhrases, List<String> targetPhrases, Context mContext, HashMap<String, String> phraseToCat) {
+    public PhrasesRecyclerAdapter(List<String> sourcePhrases, List<String> targetPhrases, List<String> savedPhrases, Context mContext, HashMap<String, String> phraseToCat) {
         this.sourcePhrases = sourcePhrases;
         this.targetPhrases = targetPhrases;
+        this.savedPhrases = savedPhrases;
         this.mContext = mContext;
         this.savedPhraseDAO = AppDatabase.getInstance(mContext).getSavedPhraseDAO();
 
@@ -52,6 +55,7 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         this.delSourcetoTarget = new HashMap<>();
         this.phraseToPosition = new HashMap<>();
         this.filteredCats = new HashSet<>();
+        this.sharedPreferences = mContext.getSharedPreferences("preferences", 0);
     }
 
     @NonNull
@@ -60,6 +64,8 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.phrase_layout_item, viewGroup,false);
         ViewHolder viewHolder = new ViewHolder(view);
+
+
         return viewHolder;
     }
 
@@ -71,39 +77,42 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Log.d(TAG,"Phrase onBindVH Called");
-        final int position = i;
+
         viewHolder.source_phrase_textview.setText(sourcePhrases.get(i));
         viewHolder.target_phrase_textview.setText(targetPhrases.get(i));
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
 
+        final int position = i;
         final CheckBox chkSelected = (CheckBox) viewHolder.chkSelected;
 
-        final SharedPreferences.Editor editor = preferences.edit();
-        if(preferences.contains("checked") && preferences.getBoolean("checked",false) == true) {
+        if (savedPhrases.contains(sourcePhrases.get(i))) {
             chkSelected.setChecked(true);
         } else {
+            System.out.println("NO");
             chkSelected.setChecked(false);
         }
+
+        //editor = sharedPreferences.edit();
+        //chkSelected.setChecked(sharedPreferences.getBoolean("checked", false));
+
         viewHolder.chkSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 String source = sourcePhrases.get(position);
                 String target = targetPhrases.get(position);
                 int phraseID = savedPhraseDAO.getPhraseID(source);
+                //chkSelected.setChecked(checked);
                 if (chkSelected.isChecked()) {
                     if (!isDuplicate(source)) {
-                        editor.putBoolean("checked", true);
-                        editor.commit();
                         savedPhraseDAO.insert(new SavedPhrase(1, phraseID, 1, source, target));
+                        //editor.putBoolean("checked", true).apply();
                     }
-
                 } else {
-                    editor.putBoolean("checked", false);
-                    editor.commit();
                     savedPhraseDAO.delete(new SavedPhrase(1, phraseID, 1, source, target));
+                    //editor.putBoolean("checked", false).apply();
                 }
             }
         });
+
         /*viewHolder.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -175,29 +184,17 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         return delSourcetoTarget.size() > 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView source_phrase_textview;
         TextView target_phrase_textview;
         CheckBox chkSelected;
-        private SparseBooleanArray itemStateArray= new SparseBooleanArray();
-        ConstraintLayout phrase_layout;
+
         public ViewHolder(View itemView){
             super(itemView);
             source_phrase_textview = itemView.findViewById(R.id.SOURCE_LANG_PHRASE);
             target_phrase_textview = itemView.findViewById(R.id.TARGET_LANG_PHRASE);
             chkSelected = itemView.findViewById(R.id.chkSelected);
-        }
-
-        @Override
-        public void onClick(View view) {
-            int adapterPosition = getAdapterPosition();
-            if (!itemStateArray.get(adapterPosition, false)) {
-                chkSelected.setChecked(true);
-                itemStateArray.put(adapterPosition, true);
-            } else {
-                chkSelected.setChecked(true);
-                itemStateArray.put(adapterPosition, false);
-            }
+            System.out.println(chkSelected.isChecked());
         }
     }
 }

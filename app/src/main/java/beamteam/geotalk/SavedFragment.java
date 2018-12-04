@@ -49,6 +49,9 @@ public class SavedFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_saved, container, false);
 
+        savedPhrases.clear();
+        targetPhrases.clear();
+
         for (int i = 0; i < phrases.size(); i++) {
             savedPhrases.add(phrases.get(i).source);
             targetPhrases.add(phrases.get(i).target);
@@ -75,6 +78,8 @@ public class SavedFragment extends Fragment {
                 savedPhraseDAO.delete(new SavedPhrase(1, phraseID, 1, source, target));
                 savedPhrases.remove(position);
                 targetPhrases.remove(position);
+                List<String> l = savedPhraseDAO.getSourcePhrases(1, 1);
+                System.out.println(l.size());
                 adapter.notifyDataSetChanged();
 
             }
