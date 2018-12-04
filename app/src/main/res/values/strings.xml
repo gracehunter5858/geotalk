@@ -10,7 +10,7 @@
     <string name="TITLE_GENERAL">General</string>
     <string name="TITLE_Context">Context</string>
     <string name="TITLE_SAVED">Saved</string>
-    <string name="title_activity_bottom_nav">BottomNav</string>
+    <string name="title_activity_bottom_nav">GeoTalk</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -26,7 +26,7 @@
     </string-array>
     <string name="TITLE_CATEGORIES">CATEGORIES</string>
     <string name="title_activity_profile">ProfileActivity</string>
-    <string name="PhotoName">Placeholder Name</string>
+    <string name="PhotoName">Denny Min</string>
     <string name="Source_Lang_Header">I speak and understand</string>
     <string name="Target_Lang_Header">Target language</string>
     <string name="Target_Lang_Blurb">automatically assign a language to translate to</string>
@@ -51,6 +51,12 @@
         <item>Italian</item>
         <item>Russian</item>
         <item>English</item>
+    </string-array>
+    <string-array name="fromlanguagesProfile">
+        <item>English</item>
+    </string-array>
+    <string-array name="tolanguagesProfile">
+        <item>Korean</item>
     </string-array>
     <string name="title_activity_translate">Translate</string>
 </resources>

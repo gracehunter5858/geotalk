@@ -16,14 +16,12 @@ import android.widget.ToggleButton;
 
 import java.util.List;
 
-import beamteam.geotalk.OnCategoryClickListener;
 import beamteam.geotalk.R;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.ViewHolder>{
     private static final String TAG = "CatRecAdapt";
     private List<String> categoryList;
     private Context mContext;
-    private OnCategoryClickListener onCatClickListener;
     private PhrasesRecyclerAdapter phraseAdapter;
 
 
