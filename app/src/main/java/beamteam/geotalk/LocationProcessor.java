@@ -110,7 +110,7 @@ public class LocationProcessor {
             phraseMapSourceLang = new HashMap<>();
             phraseMapTargetLang = new HashMap<>();
 
-            for (String subcategory : LocationCategorizer.getSubcategories(category)) {
+            for (String subcategory : categoryDAO.getSubcategories(category)) {
                 System.out.println("Subcategory:" + subcategory);
                 List<String> phraseListSourceLang = new ArrayList<>();
                 List<String> phraseListTargetLang = new ArrayList<>();
