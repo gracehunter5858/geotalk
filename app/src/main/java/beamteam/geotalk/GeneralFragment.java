@@ -85,19 +85,19 @@ public class GeneralFragment extends Fragment {
         Map<String, List<String>> phraseMapTargetLang = new HashMap<>();
 
         // Get all subcategories
-        List<CategoryTuple> categories = categoryDAO.getCategories();
-        for (CategoryTuple ct : categories) {
+        List<String> categories = categoryDAO.getSubcategories("general");
+        for (String ct : categories) {
             List<String> phraseListSourceLang = new ArrayList<>();
             List<String> phraseListTargetLang = new ArrayList<>();
 
-            int catID = categoryDAO.getCatID(ct.cat, ct.subcat);
+            int catID = categoryDAO.getCatID("general", ct);
             List<Integer> phraseIDs = phraseByCategoryDAO.getPhraseIDsForCatID(catID);
             for (int id : phraseIDs) {
                 phraseListSourceLang.add(translationDAO.getTranslation(id, sourceLanguage));
                 phraseListTargetLang.add(translationDAO.getTranslation(id, targetLanguage));
             }
-            phraseMapSourceLang.put(ct.subcat, phraseListSourceLang);
-            phraseMapTargetLang.put(ct.subcat, phraseListTargetLang);
+            phraseMapSourceLang.put(ct, phraseListSourceLang);
+            phraseMapTargetLang.put(ct, phraseListTargetLang);
 
         }
         /*
