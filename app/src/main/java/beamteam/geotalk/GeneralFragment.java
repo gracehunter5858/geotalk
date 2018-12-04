@@ -63,7 +63,7 @@ public class GeneralFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //contextFrag = new ContextFragment();
         phraseToCat = new HashMap<>();
-        AppDatabase db = AppDatabase.getInMemoryDatabase(this.getContext());
+        AppDatabase db = AppDatabase.getInstance(this.getContext());
         this.savedPhraseDAO = db.getSavedPhraseDAO();
         this.categoryDAO = db.getCategoryDAO();
         this.phraseByCategoryDAO = db.getPhraseByCategoryDAO();
@@ -188,20 +188,5 @@ public class GeneralFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void addDatabaseContent() {
-        System.out.println("Adding food phrases");
-        categoryDAO.insert(new Category("restaurant", "food"));
-        int catID = categoryDAO.getCatID("restaurant", "food");
-        translationDAO.insert(new Translation(1, "English", "muffin"));
-        translationDAO.insert(new Translation(1, "Spanish", "여보세요"));
-        phraseByCategoryDAO.insert(new PhraseByCategory(catID, 1));
-
-        System.out.println("Adding drink phrases");
-        categoryDAO.insert(new Category("restaurant", "drink"));
-        catID = categoryDAO.getCatID("restaurant", "drink");
-        translationDAO.insert(new Translation(2, "English", "water"));
-        translationDAO.insert(new Translation(2, "Spanish", "agua"));
-        phraseByCategoryDAO.insert(new PhraseByCategory(catID, 2));
-    }
 
 }
