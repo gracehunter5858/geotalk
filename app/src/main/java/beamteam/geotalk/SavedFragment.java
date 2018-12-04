@@ -68,7 +68,11 @@ public class SavedFragment extends Fragment {
                 Toast.makeText(SavedFragment.this.getContext(), "Removed Phrase", Toast.LENGTH_SHORT).show();
                 //Remove swiped item from list and notify the RecyclerView
                 int position = viewHolder.getAdapterPosition();
-                savedPhraseDAO.delete(new SavedPhrase(1, 1, 1, savedPhrases.get(position), targetPhrases.get(position)));
+                String source = savedPhrases.get(position);
+                String target = targetPhrases.get(position);
+                int phraseID = savedPhraseDAO.getPhraseID(source);
+
+                savedPhraseDAO.delete(new SavedPhrase(1, phraseID, 1, source, target));
                 savedPhrases.remove(position);
                 targetPhrases.remove(position);
                 adapter.notifyDataSetChanged();
