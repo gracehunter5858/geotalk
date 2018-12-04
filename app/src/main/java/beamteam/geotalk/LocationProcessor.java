@@ -46,11 +46,12 @@ public class LocationProcessor {
 
     public LocationProcessor(ContextFragment contextFrag) {
         this.contextFrag = contextFrag;
-        /*categoryDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getCategoryDAO();
-        phraseByCategoryDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getPhraseByCategoryDAO();
-        translationDAO = AppDatabase.getInMemoryDatabase(contextFrag.getContext()).getTranslationDAO();
+        AppDatabase instance = AppDatabase.getInstance(contextFrag.getContext());
+        categoryDAO = instance.getCategoryDAO();
+        phraseByCategoryDAO = instance.getPhraseByCategoryDAO();
+        translationDAO = instance.getTranslationDAO();
 
-        addDatabaseContent();*/
+        //addDatabaseContent();
     }
 
     // DEBUG
