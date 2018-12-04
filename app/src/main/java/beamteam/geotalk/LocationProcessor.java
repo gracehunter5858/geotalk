@@ -84,6 +84,7 @@ public class LocationProcessor {
                 String type = extractLocationType(response);
                 if (type != null) {
                     String category = typeToCategory(type);
+                    category = "airport";
                     if (category != null) {
                         System.out.println(category);
                         setPhrasesForCategory(category);

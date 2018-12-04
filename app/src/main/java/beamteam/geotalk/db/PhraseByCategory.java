@@ -21,7 +21,7 @@ public class PhraseByCategory {
 
     public static PhraseByCategory[] getInitialData() {
         return new PhraseByCategory[] {
-                new PhraseByCategory(0, 0), // airport/baggage, "baggage claim"
+                new PhraseByCategory(1, 0), // airport/baggage, "baggage claim"
         };
 }
 

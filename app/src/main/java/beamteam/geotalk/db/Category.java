@@ -25,8 +25,8 @@ public class Category {
     public static Category[] getInitialData() {
         return new Category[] {
                 // Locations
-                new Category(0, "airport", "Baggage"),
-                new Category( 1, "airport", "On the Plane"),
+                new Category(1, "airport", "Baggage"),
+                new Category(2, "airport", "On the Plane"),
                 new Category(3, "airport", "Customs"),
                 new Category(4, "airport", "Transportation"),
                 new Category(5, "airport", "Getting to the Plane"),
@@ -34,7 +34,7 @@ public class Category {
 
                 // General
                 new Category(7, "general", "Basics"),
-                new Category( 8, "general", "Numbers"),
+                new Category(8, "general", "Numbers"),
                 new Category(9, "general", "Dates & Times"),
                 new Category(10, "general", "Directions"),
                 new Category(11, "general", "Food"),
