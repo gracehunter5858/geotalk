@@ -42,9 +42,9 @@ public abstract class AppDatabase extends RoomDatabase {
                                 @Override
                                 public void run() {
                                     AppDatabase instance = getInstance(context);
+                                    instance.getTranslationDAO().insertAll(Translation.getInitialData());
                                     instance.getCategoryDAO().insertAll(Category.getInitialData());
                                     instance.getPhraseByCategoryDAO().insertAll(PhraseByCategory.getInitialData());
-                                    instance.getTranslationDAO().insertAll(Translation.getInitialData());
                                     instance.getUserDao().insert(User.getTestUser());
                                 }
                             });

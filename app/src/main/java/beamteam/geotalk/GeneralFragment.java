@@ -98,7 +98,10 @@ public class GeneralFragment extends Fragment {
 
             int catID = categoryDAO.getCatID("general", ct);
             List<Integer> phraseIDs = phraseByCategoryDAO.getPhraseIDsForCatID(catID);
+            System.out.println("Source lang: " + sourceLanguage);
             for (int id : phraseIDs) {
+                System.out.print("ID: " + id);
+                System.out.println("Getting translation " + translationDAO.getTranslation(id, sourceLanguage));
                 phraseListSourceLang.add(translationDAO.getTranslation(id, sourceLanguage));
                 phraseListTargetLang.add(translationDAO.getTranslation(id, targetLanguage));
             }
