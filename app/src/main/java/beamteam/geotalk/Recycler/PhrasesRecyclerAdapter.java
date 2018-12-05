@@ -198,7 +198,12 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
             }
         }
         range[0] = firstIndex;
-        range[1] = lastIndex;
+        if (firstIndex != -1 && lastIndex != -1) {
+            range[1] = lastIndex;
+        } else {
+            range[1] = firstIndex + 1;
+        }
+
         return range;
     }
 
