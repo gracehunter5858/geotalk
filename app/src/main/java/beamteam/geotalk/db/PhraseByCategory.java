@@ -18,14 +18,13 @@ public class PhraseByCategory {
         this.catID = catID;
         this.phraseID = phraseID;
     }
-
     public static PhraseByCategory[] getInitialData() {
         return new PhraseByCategory[] {
-                new PhraseByCategory(0, 0), // airport/baggage baggage claim
+                //new PhraseByCategory(0, 0), // airport/baggage baggage claim
+                new PhraseByCategory(2, 72),
+                new PhraseByCategory(2, 73),
+                new PhraseByCategory(3, 71),
                 new PhraseByCategory(4, 70),
-                new PhraseByCategory(4, 71),
-                new PhraseByCategory(4, 72),
-                new PhraseByCategory(4, 73),
                 // Basics
                 new PhraseByCategory(6, 1),
                 new PhraseByCategory(6, 2),
