@@ -17,6 +17,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -29,20 +31,25 @@ import beamteam.geotalk.db.SavedPhrase;
 import beamteam.geotalk.db.SavedPhraseDAO;
 
 
-public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecyclerAdapter.ViewHolder>{
+public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecyclerAdapter.ViewHolder> {
     private static final String TAG = "PhrRecAdapt";
     private List<String> sourcePhrases;
     private List<String> targetPhrases;
     private List<String> savedPhrases;
     private Context mContext;
     private SavedPhraseDAO savedPhraseDAO;
-    private String category;
+
     private HashMap<String, String> phraseToCat;
     private HashMap<String, String> delSourcetoTarget;
     private HashMap<String, Integer> phraseToPosition;
-    private LinkedList<String> filteredCats;
+
+    private HashSet<String> filteredCats;
+    private HashSet<String> selectedCats;
     final SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
+    private ArrayList<String> sourcePhrasesBU;
+    private ArrayList<String> targetPhrasesBU;
 
 
     public PhrasesRecyclerAdapter(List<String> sourcePhrases, List<String> targetPhrases, List<String> savedPhrases, Context mContext, HashMap<String, String> phraseToCat) {
@@ -56,7 +63,17 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
 
         this.delSourcetoTarget = new HashMap<>();
         this.phraseToPosition = new HashMap<>();
-        this.filteredCats = new LinkedList<>();
+
+        for (int i = 0; i < sourcePhrases.size(); i++) {
+            phraseToPosition.put(sourcePhrases.get(i), i);
+        }
+
+        this.sourcePhrasesBU = new ArrayList<>(sourcePhrases);
+        this.targetPhrasesBU = new ArrayList<>(targetPhrases);
+
+        this.filteredCats = new HashSet<>();
+        this.selectedCats = new HashSet<>();
+
         this.sharedPreferences = mContext.getSharedPreferences("preferences", 0);
     }
 
@@ -64,9 +81,8 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.phrase_layout_item, viewGroup,false);
+                .inflate(R.layout.phrase_layout_item, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
-
 
         return viewHolder;
     }
@@ -78,7 +94,7 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Log.d(TAG,"Phrase onBindVH Called");
+        Log.d(TAG, "Phrase onBindVH Called");
 
         viewHolder.source_phrase_textview.setText(sourcePhrases.get(i));
         viewHolder.target_phrase_textview.setText(targetPhrases.get(i));
@@ -124,9 +140,8 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     }
 
 
-
-    //Called when new new list created via filters
-    public void newPhraseList(List<String> newSourceList, List<String> newTargetList){
+    // Called when new new list created via filters
+    public void newPhraseList(List<String> newSourceList, List<String> newTargetList) {
         this.sourcePhrases = newSourceList;
         this.targetPhrases = newTargetList;
         notifyDataSetChanged();
@@ -145,8 +160,12 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         return sourcePhrases;
     }
 
-    public LinkedList<String> getFilteredCats() {
+    public HashSet<String> getFilteredCats() {
         return filteredCats;
+    }
+
+    public HashSet<String> getCats() {
+        return new HashSet<String>(phraseToCat.values());
     }
 
     public void removeAt(int position, String phraseCat) {
@@ -154,12 +173,84 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         String source = sourcePhrases.remove(position);
         String target = targetPhrases.remove(position);
         delSourcetoTarget.put(source, target);
-        filteredCats.addLast(getPhraseCat(source));
+//        filteredCats.addLast(getPhraseCat(source));
 
         System.out.println("delSourceToTarget contains " + delSourcetoTarget);
 
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, getItemCount());
+    }
+
+    public int[] getRange(String category) {
+        int[] range = new int[2];
+        int firstIndex = -1;
+        int lastIndex = -1;
+
+        for (String phrase: sourcePhrasesBU) {
+            String phraseCat = phraseToCat.get(phrase);
+            if (category.equals(phraseCat) && firstIndex == -1) {
+                firstIndex = phraseToPosition.get(phrase);
+            } else if (category.equals(phraseCat)) {
+                lastIndex = phraseToPosition.get(phrase);
+            } else if (lastIndex != -1 && !category.equals(phraseCat)) {
+                lastIndex++;
+                break;
+            }
+        }
+        range[0] = firstIndex;
+        range[1] = lastIndex;
+        return range;
+    }
+
+    public void removeAt2(String category) {
+        System.out.println("Filtered cats when removing " + filteredCats);
+        int[] range = getRange(category);
+        if (!selectedCats.isEmpty()) {
+            sourcePhrases.addAll(sourcePhrasesBU.subList(range[0], range[1]));
+            targetPhrases.addAll(targetPhrasesBU.subList(range[0], range[1]));
+        } else {
+            sourcePhrases = new ArrayList<>(sourcePhrasesBU.subList(range[0], range[1]));
+            targetPhrases = new ArrayList<>(targetPhrasesBU.subList(range[0], range[1]));
+        }
+        selectedCats.add(category);
+
+//        delSourcetoTarget.put(source, target);
+        for (String otherCat : getCats()) {
+            if (!category.equals(otherCat) && !selectedCats.contains(otherCat)) {
+                filteredCats.add(otherCat);
+            }
+        }
+
+        System.out.println("filteredCats contain " + filteredCats);
+
+        notifyDataSetChanged();
+    }
+
+    public void addBack2(String category) {
+        if (selectedCats.size() == 1) {
+            sourcePhrases = sourcePhrasesBU;
+            targetPhrases = targetPhrasesBU;
+            selectedCats.remove(category);
+            filteredCats.clear();
+        } else {
+            selectedCats.remove(category);
+            sourcePhrases.clear();
+            targetPhrases.clear();
+            for (String otherCat : selectedCats) {
+                int[] range = getRange(otherCat);
+                sourcePhrases.addAll(sourcePhrasesBU.subList(range[0], range[1]));
+                targetPhrases.addAll(targetPhrasesBU.subList(range[0], range[1]));
+            }
+            for (String otherCat : getCats()) {
+                if (!selectedCats.contains(otherCat) && filteredCats.contains(otherCat)) {
+                    filteredCats.remove(otherCat);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+        System.out.println("Filtered cats when adding back " + filteredCats);
+
     }
 
     public void addBack(String category) {
@@ -172,19 +263,21 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
             if (!category.equals(phraseCat) && filteredCats.contains(phraseCat)) {
                 sourcePhrases.add(phrase);
                 targetPhrases.add(delSourcetoTarget.get(phrase));
+
                 delSourcetoTarget.remove(phrase);
                 filteredCats.remove(phraseCat);
+
+
 
                 notifyItemInserted(getItemCount() - 1);
             }
             System.out.println("Size of deletedSources" + deletedSources.size());
             System.out.println("Size of filtered" + filteredCats.size());
         }
-
     }
 
     public Boolean filtered() {
-        return delSourcetoTarget.size() > 0;
+        return filteredCats.size() > 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -192,7 +285,7 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         TextView target_phrase_textview;
         CheckBox chkSelected;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
             source_phrase_textview = itemView.findViewById(R.id.SOURCE_LANG_PHRASE);
             target_phrase_textview = itemView.findViewById(R.id.TARGET_LANG_PHRASE);
