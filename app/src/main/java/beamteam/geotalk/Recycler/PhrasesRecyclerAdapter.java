@@ -19,7 +19,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import beamteam.geotalk.R;
 import beamteam.geotalk.db.AppDatabase;
@@ -38,7 +40,7 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
     private HashMap<String, String> phraseToCat;
     private HashMap<String, String> delSourcetoTarget;
     private HashMap<String, Integer> phraseToPosition;
-    private HashSet<String> filteredCats;
+    private LinkedList<String> filteredCats;
     final SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -54,7 +56,7 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
 
         this.delSourcetoTarget = new HashMap<>();
         this.phraseToPosition = new HashMap<>();
-        this.filteredCats = new HashSet<>();
+        this.filteredCats = new LinkedList<>();
         this.sharedPreferences = mContext.getSharedPreferences("preferences", 0);
     }
 
@@ -143,30 +145,28 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         return sourcePhrases;
     }
 
-    public HashSet<String> getFilteredCats() {
+    public LinkedList<String> getFilteredCats() {
         return filteredCats;
     }
 
     public void removeAt(int position, String phraseCat) {
         System.out.println("Filtered cats when removing " + filteredCats);
-        if (!filteredCats.contains(phraseCat)) {
-            String source = sourcePhrases.remove(position);
-            String target = targetPhrases.remove(position);
-            delSourcetoTarget.put(source, target);
-            filteredCats.add(getPhraseCat(source));
+        String source = sourcePhrases.remove(position);
+        String target = targetPhrases.remove(position);
+        delSourcetoTarget.put(source, target);
+        filteredCats.addLast(getPhraseCat(source));
 
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, getItemCount());
-        } else {
-            addBack(phraseCat);
-        }
+        System.out.println("delSourceToTarget contains " + delSourcetoTarget);
+
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount());
     }
 
     public void addBack(String category) {
         System.out.println("Filtered cats when adding back " + filteredCats);
         List<String> deletedSources = new ArrayList<>(delSourcetoTarget.keySet());
 
-        for (int i = 0; i < delSourcetoTarget.size(); i++) {
+        for (int i = 0; i < deletedSources.size(); i++) {
             String phrase = deletedSources.get(i);
             String phraseCat = getPhraseCat(phrase);
             if (!category.equals(phraseCat) && filteredCats.contains(phraseCat)) {
@@ -177,7 +177,10 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
 
                 notifyItemInserted(getItemCount() - 1);
             }
+            System.out.println("Size of deletedSources" + deletedSources.size());
+            System.out.println("Size of filtered" + filteredCats.size());
         }
+
     }
 
     public Boolean filtered() {

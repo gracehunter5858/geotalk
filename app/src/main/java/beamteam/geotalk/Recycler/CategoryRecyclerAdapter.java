@@ -23,6 +23,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     private List<String> categoryList;
     private Context mContext;
     private PhrasesRecyclerAdapter phraseAdapter;
+    private String selCat;
 
 
     public CategoryRecyclerAdapter(List<String> categoryList,Context context, PhrasesRecyclerAdapter adapter) {
@@ -51,31 +52,45 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             public void onClick(View v) {
                 String category = catViewHolder.category_item_button.getText().toString();
                 System.out.println("Is state checked? " + catViewHolder.category_item_button.isChecked());
-                if (catViewHolder.category_item_button.isChecked()) {
-                    System.out.println("BUTTON IS ON");
-                    System.out.println("Category to be selected: " + category);
+                if (!phraseAdapter.filtered()) {
+                    selCat = category;
+                    if (catViewHolder.category_item_button.isChecked()) {
+                        System.out.println("BUTTON IS ON");
+                        System.out.println("Category to be selected: " + category);
 
-                    Drawable on = mContext.getDrawable(R.drawable.selectedbuttonbackground);
-                    catViewHolder.category_layout.setBackground(on);
+                        Drawable on = mContext.getDrawable(R.drawable.selectedbuttonbackground);
+                        catViewHolder.category_layout.setBackground(on);
 
-                    for (int i = 0; i < phraseAdapter.getItemCount(); i++) {
-                        List<String> phrases = phraseAdapter.getSourcePhrases();
-                        String phrase = phrases.get(i);
-                        String phraseCat = phraseAdapter.getPhraseCat(phrase);
-                        System.out.println("Searching phrases: " + phrase);
-                        System.out.println("Category of this phrase: " + phraseCat);
+                        for (int i = 0; i < phraseAdapter.getItemCount(); i++) {
+                            List<String> phrases = phraseAdapter.getSourcePhrases();
+                            String phrase = phrases.get(i);
+                            String phraseCat = phraseAdapter.getPhraseCat(phrase);
+                            System.out.println("Searching phrases: " + phrase);
+                            System.out.println("Category of this phrase: " + phraseCat);
 
-                        if (!category.equals(phraseCat)) {
-                            phraseAdapter.removeAt(i, phraseCat);
+                            if (!category.equals(phraseCat)) {
+                                phraseAdapter.removeAt(i, phraseCat);
+                                i--;
+                            }
                         }
                     }
+//                    else {
+//                        System.out.println("BUTTON IS OFF");
+//
+//                        Drawable off = mContext.getDrawable(R.drawable.buttonbackground);
+//                        catViewHolder.category_layout.setBackground(off);
+//                        // Adds back categories that were removed due to this category
+//                        phraseAdapter.addBack(category);
+//                    }
                 } else {
-                    System.out.println("BUTTON IS OFF");
+                    if (selCat.equals(category)) {
+                        System.out.println("BUTTON IS OFF");
 
-                    Drawable off = mContext.getDrawable(R.drawable.buttonbackground);
-                    catViewHolder.category_layout.setBackground(off);
-                    // Adds back categories that were removed due to this category
-                    phraseAdapter.addBack(category);
+                        Drawable off = mContext.getDrawable(R.drawable.buttonbackground);
+                        catViewHolder.category_layout.setBackground(off);
+                        // Adds back categories that were removed due to this category
+                        phraseAdapter.addBack(category);
+                    }
                 }
             }
         });
