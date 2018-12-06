@@ -84,6 +84,7 @@ public class LocationProcessor {
                 String type = extractLocationType(response);
                 if (type != null) {
                     String category = typeToCategory(type);
+                    //Hard set location as airport for purpose of demonstration
                     category = "airport";
                     if (category != null) {
                         System.out.println(category);
@@ -102,9 +103,6 @@ public class LocationProcessor {
         queue.add(jsonObjectRequest);
     }
 
-    void manuallyChangeLocation(String locationCategory) {
-        setPhrasesForCategory(locationCategory);
-    }
 
     private void setPhrasesForCategory(String category) {
         if (!category.equals(contextFrag.currentLocationCategory)) {

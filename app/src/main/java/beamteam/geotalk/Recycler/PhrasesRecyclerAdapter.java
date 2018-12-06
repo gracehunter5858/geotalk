@@ -109,8 +109,6 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
             chkSelected.setChecked(false);
         }
 
-        //editor = sharedPreferences.edit();
-        //chkSelected.setChecked(sharedPreferences.getBoolean("checked", false));
 
         viewHolder.chkSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -122,22 +120,13 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
                 if (chkSelected.isChecked()) {
                     if (!isDuplicate(source)) {
                         savedPhraseDAO.insert(new SavedPhrase(1, phraseID, 1, source, target));
-                        //editor.putBoolean("checked", true).apply();
                     }
                 } else {
                     savedPhraseDAO.delete(new SavedPhrase(1, phraseID, 1, source, target));
-                    //editor.putBoolean("checked", false).apply();
                 }
             }
         });
-
-        /*viewHolder.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-        Log.d(TAG, "Phrase Clicked On");
-        }
-        });*/
-    }
+            }
 
 
     // Called when new new list created via filters
@@ -173,7 +162,6 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         String source = sourcePhrases.remove(position);
         String target = targetPhrases.remove(position);
         delSourcetoTarget.put(source, target);
-//        filteredCats.addLast(getPhraseCat(source));
 
         System.out.println("delSourceToTarget contains " + delSourcetoTarget);
 
@@ -219,7 +207,6 @@ public class PhrasesRecyclerAdapter extends RecyclerView.Adapter<PhrasesRecycler
         }
         selectedCats.add(category);
 
-//        delSourcetoTarget.put(source, target);
         for (String otherCat : getCats()) {
             if (!category.equals(otherCat) && !selectedCats.contains(otherCat)) {
                 filteredCats.add(otherCat);

@@ -35,7 +35,6 @@ public class GeneralFragment extends Fragment {
     private CategoryDAO categoryDAO;
     private PhraseByCategoryDAO phraseByCategoryDAO;
     private TranslationDAO translationDAO;
-    private ContextFragment contextFrag;
     private HashMap<String, String> phraseToCat;
 
     private String sourceLanguage = "English";
@@ -45,12 +44,6 @@ public class GeneralFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     * @return A new instance of fragment GeneralFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static GeneralFragment newInstance() {
         GeneralFragment fragment = new GeneralFragment();
         Bundle args = new Bundle();
@@ -62,7 +55,6 @@ public class GeneralFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //contextFrag = new ContextFragment();
         phraseToCat = new HashMap<>();
         AppDatabase db = AppDatabase.getInstance(this.getContext());
         this.savedPhraseDAO = db.getSavedPhraseDAO();
@@ -70,11 +62,6 @@ public class GeneralFragment extends Fragment {
         this.phraseByCategoryDAO = db.getPhraseByCategoryDAO();
         this.translationDAO = db.getTranslationDAO();
 
-        /*UserDAO userDAO = AppDatabase.getInstance(getContext()).getUserDao();
-        sourceLanguage = userDAO.getUserByID(1).sourceLanguage;
-        targetLanguage = userDAO.getUserByID(1).targetLanguage;*/
-
-        //addDatabaseContent();
         if (getArguments() != null) {
 
         }
@@ -111,54 +98,6 @@ public class GeneralFragment extends Fragment {
         }
 
         List<String> savedPhrases = savedPhraseDAO.getSourcePhrases(1, 1);
-
-        /*
-        savedPhraseDAO.getPhraseIDs();
-
-        List<String> phrases = savedPhraseDAO.getSourcePhrases(1, 1);
-        if (phrases.contains(((TextView) view.findViewById(R.id.bathroom)).getText().toString())) {
-            ((CheckBox) view.findViewById(R.id.savestar1)).setChecked(true);
-        } else {
-            ((CheckBox) view.findViewById(R.id.savestar1)).setChecked(false);
-        }
-        if (phrases.contains(((TextView) view.findViewById(R.id.terminal)).getText().toString())) {
-            ((CheckBox) view.findViewById(R.id.savestar2)).setChecked(true);
-        } else {
-            ((CheckBox) view.findViewById(R.id.savestar2)).setChecked(false);
-        }
-
-
-        ((CheckBox) view.findViewById(R.id.savestar1)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String source = ((TextView) view.findViewById(R.id.bathroom)).getText().toString();
-                String target = "¿Dónde está el baño?";
-                if (isChecked) {
-                    if (!isDuplicate(source)) {
-                        savedPhraseDAO.insert(new SavedPhrase(1, 1, 1, source, target));
-                    }
-
-                } else {
-                    savedPhraseDAO.delete(new SavedPhrase(1, 1, 1, source, target));
-                }
-            }
-        });
-        ((CheckBox) view.findViewById(R.id.savestar2)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String source = ((TextView) view.findViewById(R.id.terminal)).getText().toString();
-                String target = "¿Dónde está la terminal?";
-                if (isChecked) {
-                    if (!isDuplicate(source)) {
-                        savedPhraseDAO.insert(new SavedPhrase(1, 1, 1, source, target));
-                    }
-
-                } else {
-                    savedPhraseDAO.delete(new SavedPhrase(1, 1, 1, source, target));
-                }
-            }
-        });*/
-
         List<String> targetPhrases = new ArrayList<>();
         List<String> sourcePhrases = new ArrayList<>();
 
@@ -177,10 +116,6 @@ public class GeneralFragment extends Fragment {
         return view;
     }
 
-    public boolean isDuplicate(String phrase) {
-        List<String> phrases = savedPhraseDAO.getSourcePhrases(1, 1);
-        return phrases.contains(phrase);
-    }
 
     private PhrasesRecyclerAdapter initPhraseRecyclerView(List<String> sourcePhrases, List<String> targetPhrases, List<String> savedPhrases, View view, HashMap<String, String> phraseToCat){
         RecyclerView recyclerView = view.findViewById(R.id.RECYCLERVIEW_PHRASES);

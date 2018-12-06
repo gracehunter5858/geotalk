@@ -80,9 +80,7 @@ public class ContextFragment extends Fragment {
         super.onCreate(savedInstanceState);
         System.out.println("Context fragment created");
 
-        /*UserDAO userDAO = AppDatabase.getInstance(getContext()).getUserDao();
-        sourceLanguage = userDAO.getUserByID(1).sourceLanguage;
-        targetLanguage = userDAO.getUserByID(1).targetLanguage;*/
+
 
         locationProcessor = new LocationProcessor(this);
         AppDatabase db = AppDatabase.getInstance(this.getContext());
@@ -97,7 +95,6 @@ public class ContextFragment extends Fragment {
             return;
         }
 
-//        locationProcessor.getUpdatedPhrases(lat, lon);
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -178,11 +175,7 @@ public class ContextFragment extends Fragment {
         initCategoryRecyclerView(categories, getView(), initPhraseRecyclerView(sourcePhrases, targetPhrases, savedPhrases, getView(), phraseToCat));
 
     }
-    /**
-     *
-     * So according to stackoverflow, I should be able to get away with using this??
-     *
-     * **/
+
     private PhrasesRecyclerAdapter initPhraseRecyclerView(List<String> sourcePhrases, List<String> targetPhrases, List<String> savedPhrases, View view, HashMap<String, String> phraseToCat){
         RecyclerView recyclerView = view.findViewById(R.id.RECYCLERVIEW_PHRASES);
         PhrasesRecyclerAdapter adapter = new PhrasesRecyclerAdapter(sourcePhrases, targetPhrases, savedPhrases, getActivity(), phraseToCat);
